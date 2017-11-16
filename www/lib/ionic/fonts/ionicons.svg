@@ -812,9 +812,9 @@ d="M368 320h48v-320h-416v320h48v16h32v-16h48v30v2c0 18 10 32 29 32h99c19 0 32 -1
 h384z" />
     <glyph glyph-name="ion-ios-briefcase" unicode="&#xf3ee;" horiz-adv-x="416" 
 d="M48 320v16h32v-16h-32zM0 0v240h416v-240h-416zM336 320v16h32v-16h-32zM368 320h48v-64h-416v64h48v-32h32v32h48v30v2c0 18 10 32 29 32h99c19 0 32 -14 32 -32v-2v-30h48v-32h32v32zM272 320v30c0 10 -7 18 -17 18h-97c-11 0 -14 -8 -14 -18v-30v0h128v0z" />
-    <glyph glyph-name="ion-ios-browsers-outline" unicode="&#xf3ef;" horiz-adv-x="384" 
+    <glyph glyph-name="ion-ios-areaPersonalers-outline" unicode="&#xf3ef;" horiz-adv-x="384" 
 d="M0 304h304v-304h-304v304zM288 16v272h-272v-272h272zM384 384v-304h-64v16h48v272h-272v-48h-16v64h304z" />
-    <glyph glyph-name="ion-ios-browsers" unicode="&#xf3f0;" horiz-adv-x="384" 
+    <glyph glyph-name="ion-ios-areaPersonalers" unicode="&#xf3f0;" horiz-adv-x="384" 
 d="M0 304h304v-304h-304v304zM80 384h304v-304h-64v240h-240v64z" />
     <glyph glyph-name="ion-ios-calculator-outline" unicode="&#xf3f1;" horiz-adv-x="288" 
 d="M32 288v64h224v-64h-224zM48 336v-32h192v32h-192zM256 384c18 0 32 -14 32 -32v-320c0 -18 -14 -32 -32 -32h-224c-18 0 -32 14 -32 32v320c0 18 14 32 32 32h224zM272 32v320c0 9 -7 16 -16 16h-224c-9 0 -16 -7 -16 -16v-320c0 -9 7 -16 16 -16h224c9 0 16 7 16 16z
