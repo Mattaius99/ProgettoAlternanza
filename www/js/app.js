@@ -45,7 +45,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       url: '/areaPersonale',
       views: {
         'menuContent': {
-          templateUrl: 'templates/areaPersonale.html'
+          templateUrl: 'templates/areaPersonale.html',
+          controller: 'areaPersonaleCtrl'
         }
       }
     })
