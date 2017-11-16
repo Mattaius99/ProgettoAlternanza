@@ -1,5 +1,11 @@
 <ion-view view-title="areaPersonale">
   <ion-content>
-    <h1>areaPersonale</h1>
+    <h1>{{benvenuto}}</h1>
+    <ion-list>
+      <ion-item ng-repeat="guasto in guasti">
+        {{guasto.descrizione}}
+        {{guasto.id_utente}}
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
