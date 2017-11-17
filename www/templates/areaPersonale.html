@@ -1,30 +1,28 @@
-<ion-view view-title="areaPersonale">
+<ion-view view-title="Area Personale">
   <ion-content>
-    <h1>areaPersonale</h1>
     <ion-item>
       <ion-label>
-        qualcosa{{benvenuto}}
+        {{benvenuto}}
       </ion-label>
     </ion-item>
 
     <ion-list>
+      <ion-item ng-repeat="guasto in guasti">
+      <div class="list">
 
-      <table>
-      <tr>
-      <td rowspan="3"; align=”center”><div style="">IMMAGINE</div></td>
-      <td>Cella 2</td>
-      <td>Cella 3</td>
-      </tr>
-      <tr>
-      <td>Cella 5</td>
-      <td>Cella 6</td>
-      </tr>
-      <tr>
-      <td>Cella 8</td>
-      <td>Cella 9</td>
-      </tr>
-      </table>
-
+    <a class="item item-thumbnail-left" href="">
+      <img src={{guasto.img}}>
+      <h2>{{guasto.titolo}}</h2>
+      <h4>{{guasto.tipo}}</h4>
+      <p>{{guasto.indirizzo}}</p>
+      <p style="text-align: justify">{{guasto.descrizione}}</p>
+    </a>
+</div>
+  </ion-item>
     </ion-list>
+    <ion-item>
+        <ion-label color="primary">Inline Label</ion-label>
+        <ion-input placeholder="Text Input"></ion-input>
+      </ion-item>
   </ion-content>
 </ion-view>
