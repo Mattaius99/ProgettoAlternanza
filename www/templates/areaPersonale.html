@@ -9,7 +9,7 @@
       <center><h2>Le tue segnalazioni</h2></center>
 
     <ion-list>
-      <ion-item ng-repeat="guasto in select">
+      <ion-item ng-repeat="guasto in guasti">
       <div class="list">
 
     <a class="item item-thumbnail-left" href="">
@@ -37,7 +37,7 @@
             <div class="col">
               <select>
               <option value="tipologia">Tipologia</option>
-              <option ng-repeat="tipologia in select" value={{tipologia.tipo}}>{{tipologia.tipo}}</option>
+              <option ng-repeat="tipologia in tipologie" value={{tipologia.tipo}}>{{tipologia.tipo}}</option>
             </select></div>
           </div>
 </center>
