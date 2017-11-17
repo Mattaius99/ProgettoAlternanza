@@ -6,6 +6,8 @@
       </ion-label>
     </ion-item>
 
+      <center><h2>Le tue segnalazioni</h2></center>
+
     <ion-list>
       <ion-item ng-repeat="guasto in select">
       <div class="list">
@@ -21,8 +23,54 @@
   </ion-item>
     </ion-list>
     <ion-item>
-        <ion-label color="primary">Inline Label</ion-label>
-        <ion-input placeholder="Text Input"></ion-input>
+
+
+      <ion-item>
+        <center>
+          <div class="row">
+            <div class="col"><ion-label>Titolo</ion-label></div>
+            <div class="col"><ion-label>Tipo Guasto</ion-label></div>
+           </div>
+          <div class="row">
+
+            <div class="col"><input placeholder="                        Titolo segnalazione" size="45"></div>
+            <div class="col"><select>
+              <option ng-repeat="tipologia in select" value={{tipologia.tipo}} onload="seleziona(Tipologia,0)">{{tipologia.tipo}}</option>
+</select></div>
+          </div>
+</center>
+  </ion-item>
+
+  <ion-item>
+    <center><div class="col"><select>
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="opel">Opel</option>
+      <option value="audi">Audi</option>
+</select></div></Center>
+
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Email</ion-label>
+    <ion-input type="email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Phone</ion-label>
+    <ion-input type="tel"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Toggle</ion-label>
+    <ion-toggle></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Checkbox</ion-label>
+    <ion-checkbox></ion-checkbox>
+  </ion-item>
+
       </ion-item>
   </ion-content>
 </ion-view>
