@@ -26,55 +26,62 @@
 
 
       <ion-item>
-        <center>
-          <div class="row">
-            <div class="col"><ion-label>Titolo</ion-label></div>
-            <div class="col"><ion-label>Guasto</ion-label></div>
-          </div></center>
-<center>
-          <div class="row">
 
-            <div class="col"><input placeholder="Titolo segnalazione" size="9"></div>
+          <div class="col">
 
+            <div class="row">
+                <div class="col">
+                  <center><ion-label>Titolo</ion-label></center>
+                </div>
+                <div class="col">
+                  <center><input placeholder="Titolo guasto"></center>
+                </div>
+              </div>
+            <div class="row">
+              <div class="col">
+                <center><ion-label>Guasto</ion-label></center>
+              </div>
+              <div class="col">
+                <center><select>
+                <option value="Tipologia">Tipologia</option>
+                <option ng-repeat="tipologia in tipologie" value={{tipologia.tipo}}>{{tipologia.tipo}}</option>
+              </select></center></div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <center><ion-label>Comune</ion-label></center>
+              </div>
             <div class="col">
-              <select>
-              <option value="Tipologia">Tipologia</option>
-              <option ng-repeat="tipologia in tipologie" value={{tipologia.tipo}}>{{tipologia.tipo}}</option>
-            </select></div>
+              <center><select>
+              <option value="Comune">Comune</option>
+              <option ng-repeat="comune in comuni" value={{comune.nome}}>{{comune.nome}}</option>
+        </select></center>
+      </div>
+</div>
+</ion-item>
 
-          </div>
-          </center>
-</center>
+<ion-item>
+    <center><ion-label>Descrizione</ion-label></center>
+    <center><textarea rows="4" cols="30" placeholder="inserisci la descrizione..." style="margin-bottom:10px">
+</textarea></center>
   </ion-item>
 
-  <ion-item>
-    <center><div class="col"><select>
-      <option value="Comune">Comune</option>
-      <option ng-repeat="comune in comuni" value={{comune.nome}}>{{comune.nome}}</option>
-</select></div></Center>
 
-  </ion-item>
 
-  <ion-item>
-    <ion-label floating>Email</ion-label>
-    <ion-input type="email"></ion-input>
-  </ion-item>
 
-  <ion-item>
-    <ion-label stacked>Phone</ion-label>
-    <ion-input type="tel"></ion-input>
-  </ion-item>
+    <div class="row">
+      <ion-item><div class="col">
+        
 
-  <ion-item>
-    <ion-label>Toggle</ion-label>
-    <ion-toggle></ion-toggle>
-  </ion-item>
+      </div></ion-item>
+      <ion-item><div class="col">
 
-  <ion-item>
-    <ion-label>Checkbox</ion-label>
-    <ion-checkbox></ion-checkbox>
-  </ion-item>
+      </div></ion-item>
+    </div>
 
-      </ion-item>
+
+
+
+    </ion-item>
   </ion-content>
 </ion-view>
