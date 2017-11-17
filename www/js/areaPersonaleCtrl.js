@@ -30,23 +30,46 @@ angular.module('starter.controllers')
   })
 
   function seleziona(tab, lim) {
-    console.log("ok");
     $http.get(linkSelect,{
       params: {
         t: tab
       }
     }).then(function(response){
-      if(response.data.Guasto.length > lim && lim != 0){
-        for(cont=0; cont < lim; cont++, pos++){
-            $scope.select[cont]=response.data.Guasto[pos];
+      switch(tab){
+        case 'Guasto':
+          if(response.data.Guasto.length > lim && lim != 0){
+            for(cont=0; cont < lim; cont++, pos++){
+                $scope.select[cont]=response.data.Guasto[pos];
+            }
+          }else{
+            $scope.select=response.data.Guasto;
+          }
+          break;
+        case 'Guasto':
+          if(response.data.Guasto.length > lim && lim != 0){
+            for(cont=0; cont < lim; cont++, pos++){
+                $scope.select[cont]=response.data.Guasto[pos];
+            }
+          }else{
+            $scope.select=response.data.Guasto;
+          }
+          break;
+          case 'Guasto':
+            if(response.data.Guasto.length > lim && lim != 0){
+              for(cont=0; cont < lim; cont++, pos++){
+                  $scope.select[cont]=response.data.Guasto[pos];
+              }
+            }else{
+              $scope.select=response.data.Guasto;
+            }
+            break;
         }
-      }else{
-        $scope.select=response.data.Guasto;
-      }
     })
   }
 
   seleziona('Guasto',3);
+  seleziona('Tipologia',0);
+  seleziona('Comune',0);
 
   function carica() {
     $http.get(linkInsert,{
