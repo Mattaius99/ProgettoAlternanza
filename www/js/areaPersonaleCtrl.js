@@ -10,7 +10,9 @@ angular.module('starter.controllers')
   var pos = 0;
 
   $scope.benvenuto = null;
-  $scope.select = {};
+  $scope.guasti = {};
+  $scope.tipologie = {};
+  $scope.comuni = {};
   $scope.titolo = null;
   $scope.indirizzo = null;
   $scope.descrizione = null;
@@ -39,28 +41,28 @@ angular.module('starter.controllers')
         case 'Guasto':
           if(response.data.Guasto.length > lim && lim != 0){
             for(cont=0; cont < lim; cont++, pos++){
-                $scope.select[cont]=response.data.Guasto[pos];
+                $scope.guasti[cont]=response.data.Guasto[pos];
             }
           }else{
-            $scope.select=response.data.Guasto;
+            $scope.guasti=response.data.Guasto;
           }
           break;
-        case 'Guasto':
-          if(response.data.Guasto.length > lim && lim != 0){
+        case 'Tipologia':
+          if(response.data.Tipologia.length > lim && lim != 0){
             for(cont=0; cont < lim; cont++, pos++){
-                $scope.select[cont]=response.data.Guasto[pos];
+                $scope.tipoliogie[cont]=response.data.Tipologia[pos];
             }
           }else{
-            $scope.select=response.data.Guasto;
+            $scope.tipologie=response.data.Tipologia;
           }
           break;
-          case 'Guasto':
-            if(response.data.Guasto.length > lim && lim != 0){
+          case 'Comune':
+            if(response.data.Comune.length > lim && lim != 0){
               for(cont=0; cont < lim; cont++, pos++){
-                  $scope.select[cont]=response.data.Guasto[pos];
+                  $scope.comuni[cont]=response.data.Comune[pos];
               }
             }else{
-              $scope.select=response.data.Guasto;
+              $scope.comuni=response.data.Comune;
             }
             break;
         }
