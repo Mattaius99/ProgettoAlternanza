@@ -10,7 +10,7 @@ angular.module('starter.controllers')
   var pos = 0;
 
   $scope.benvenuto = null;
-  $scope.guasti = {};
+  $scope.select = {};
   $scope.titolo = null;
   $scope.indirizzo = null;
   $scope.descrizione = null;
@@ -29,23 +29,23 @@ angular.module('starter.controllers')
     $scope.benvenuto = "Ciao, " + response.data.Utente[0].nome + " " + response.data.Utente[0].cognome;
   })
 
-  function seleziona() {
+  function seleziona(tab, lim) {
     $http.get(linkSelect,{
       params: {
-        t: 'Guasto'
+        t: tab
       }
     }).then(function(response){
-      if(response.data.Guasto.length > 3){
-        for(cont=0; cont < 3; cont++, pos++){
-            $scope.guasti[cont]=response.data.Guasto[pos];
+      if(response.data.Guasto.length > lim && lim != 0){
+        for(cont=0; cont < lim; cont++, pos++){
+            $scope.select[cont]=response.data.Guasto[pos];
         }
       }else{
-        $scope.guasti=response.data.Guasto;
+        $scope.select=response.data.Guasto;
       }
     })
   }
 
-  seleziona();
+  seleziona('Guasto',3);
 
   function carica() {
     $http.get(linkInsert,{

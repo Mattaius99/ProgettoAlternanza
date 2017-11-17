@@ -1,4 +1,4 @@
-<ion-view view-title="Area Personale">
+<ion-view view-title="Area Personale" ng-load="seleziona()">
   <ion-content>
     <ion-item>
       <ion-label>
@@ -7,7 +7,7 @@
     </ion-item>
 
     <ion-list>
-      <ion-item ng-repeat="guasto in guasti">
+      <ion-item ng-repeat="guasto in select">
       <div class="list">
 
     <a class="item item-thumbnail-left" href="">
