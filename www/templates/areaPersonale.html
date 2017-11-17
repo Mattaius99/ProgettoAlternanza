@@ -29,17 +29,21 @@
         <center>
           <div class="row">
             <div class="col"><ion-label>Titolo</ion-label></div>
-            <div class="col"><ion-label>Tipo Guasto</ion-label></div>
-           </div>
+            <div class="col"><ion-label>Guasto</ion-label></div>
+          </div></center>
+<center>
           <div class="row">
 
             <div class="col"><input placeholder="Titolo segnalazione"></div>
+
             <div class="col">
               <select>
               <option value="tipologia">Tipologia</option>
               <option ng-repeat="tipologia in select" value={{tipologia.tipo}}>{{tipologia.tipo}}</option>
             </select></div>
+
           </div>
+          </center>
 </center>
   </ion-item>
 
