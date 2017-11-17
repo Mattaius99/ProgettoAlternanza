@@ -30,6 +30,7 @@ angular.module('starter.controllers')
   })
 
   function seleziona(tab, lim) {
+    console.log("ok");
     $http.get(linkSelect,{
       params: {
         t: tab
