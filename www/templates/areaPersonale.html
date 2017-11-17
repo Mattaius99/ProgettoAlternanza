@@ -36,7 +36,7 @@
             <div class="col"><input placeholder="Titolo segnalazione"></div>
             <div class="col">
               <select>
-              <option value="tipologia">Tipologia</option>
+              <option value="Tipologia">Tipologia</option>
               <option ng-repeat="tipologia in tipologie" value={{tipologia.tipo}}>{{tipologia.tipo}}</option>
             </select></div>
           </div>
@@ -45,10 +45,8 @@
 
   <ion-item>
     <center><div class="col"><select>
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="opel">Opel</option>
-      <option value="audi">Audi</option>
+      <option value="Comune">Comune</option>
+      <option ng-repeat="comune in comuni" value={{comune.nome}}>{{comune.nome}}</option>
 </select></div></Center>
 
   </ion-item>
