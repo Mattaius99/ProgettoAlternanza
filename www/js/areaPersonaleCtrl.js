@@ -7,7 +7,7 @@ angular.module('starter.controllers')
   var today = new Date();
   var idUte = $stateParams.id_Utente;
 
-  $scope.pos = -3;
+  $scope.pos = 3;
 
   $scope.benvenuto = null;
   $scope.guasti = new Array();
@@ -33,20 +33,28 @@ angular.module('starter.controllers')
   })
 
   show = function(par, direction) {
+    console.log(direction);
     var next = true;
     $scope.guastiTmp = new Array();
-    if($scope.guasti.length >= $scope.pos){
-      document.getElementById("frecciasu").src="http://segnalazioneguasti.altervista.org/images/trasparente.png";
-      document.getElementById("frecciagiu").src="http://segnalazioneguasti.altervista.org/images/freccia_giu.png";
-    }
-    if($scope.guasti.length < $scope.pos){
-      document.getElementById("frecciasu").src="http://segnalazioneguasti.altervista.org/images/freccia_su.png";
-      document.getElementById("frecciagiu").src="http://segnalazioneguasti.altervista.org/images/trasparente.png";
-    }
-    if(direction)
+    if(direction == 1 && $scope.guasti.length >= $scope.pos){
       $scope.pos += 3;
-    else
+    }else if(direction == 0){
       $scope.pos -= 3;
+    }
+    console.log("length: "+ $scope.guasti.length + " pos: " + $scope.pos);
+    console.log("guasti: "+ $scope.guasti.length);
+    if($scope.pos >= $scope.guasti.length){
+      document.getElementById("frecciasu").hidden="";
+      document.getElementById("frecciagiu").hidden="hidden";
+    }
+    if($scope.pos <= 3){
+      document.getElementById("frecciasu").hidden="hidden";
+      document.getElementById("frecciagiu").hidden="";
+    }
+    if($scope.pos < $scope.guasti.length && $scope.pos > 3){
+      document.getElementById("frecciasu").hidden="";
+      document.getElementById("frecciagiu").hidden="";
+    }
     var cont = 0;
     for (elem in $scope.guasti) {
       if (cont < $scope.pos) {
@@ -54,6 +62,7 @@ angular.module('starter.controllers')
         cont++;
       }
     }
+    console.log($scope.guastiTmp);
     if(par)
       $scope.$apply();
   };
