@@ -31,32 +31,32 @@
           <div class="col">
 
             <div class="row">
-                <div class="col">
-                  <center><ion-label>Titolo</ion-label></center>
+                <div class="col text-center">
+                  <ion-label>Titolo</ion-label>
                 </div>
-                <div class="col">
-                  <center><input placeholder="Titolo guasto"></center>
+                <div class="col text-center">
+                  <input placeholder="Titolo guasto">
                 </div>
               </div>
             <div class="row">
-              <div class="col">
-                <center><ion-label>Guasto</ion-label></center>
+              <div class="col text-center">
+                <ion-label>Guasto</ion-label>
               </div>
-              <div class="col">
-                <center><select>
+              <div class="col text-center">
+                <select>
                 <option value="Tipologia">Tipologia</option>
                 <option ng-repeat="tipologia in tipologie" value={{tipologia.tipo}}>{{tipologia.tipo}}</option>
-              </select></center></div>
+              </select></div>
             </div>
             <div class="row">
-              <div class="col">
-                <center><ion-label>Comune</ion-label></center>
+              <div class="col text-center">
+                <ion-label>Comune</ion-label>
               </div>
-            <div class="col">
-              <center><select>
+            <div class="col text-center">
+              <select>
               <option value="Comune">Comune</option>
               <option ng-repeat="comune in comuni" value={{comune.nome}}>{{comune.nome}}</option>
-        </select></center>
+        </select>
       </div>
 </div>
 </ion-item>
@@ -70,15 +70,16 @@
 
 
 
-    <div class="row">
-      <ion-item><div class="col">
-        
 
-      </div></ion-item>
-      <ion-item><div class="col">
+        <div class="row">
+          <div class="col text-center">
+              <button ion-button>Carica</button>
+          </div>
+          <div class="col text-center">
+              <button ion-button>Invia</button>
+          </div>
+        </div>
 
-      </div></ion-item>
-    </div>
 
 
 

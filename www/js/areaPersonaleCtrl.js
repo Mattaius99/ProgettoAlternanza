@@ -124,14 +124,13 @@ angular.module('starter.controllers')
         img: $scope.img
       }
     })
-<<<<<<< HEAD
+
   }
 
-=======
   };
 
   seleziona('Guasto',numSegnalazioni);
   seleziona('Tipologia',0);
   seleziona('Comune',0);
->>>>>>> 0a0bf60e22a369f08b49b53831510ed14df2931a
+
 });
