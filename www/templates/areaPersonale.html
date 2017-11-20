@@ -6,77 +6,23 @@
       </ion-label>
     </ion-item>
 
-      <center><h2>Le tue segnalazioni</h2></center>
-    <ion-list>
-      <ion-item ng-repeat="guasto in guastiTmp">
-      <div class="list">
-
-    <a class="item item-thumbnail-left" href="">
-      <img src={{guasto.img}}>
-      <h2>{{guasto.titolo}}</h2>
-      <h4>{{guasto.tipo}}</h4>
-      <p>{{guasto.indirizzo}}</p>
-      <p class="word-wrap">{{guasto.descrizione}}</p>
-    </a>
-</div>
-  </ion-item>
+    <center><h2>Le tue segnalazioni</h2></center>
+      <ion-list>
+        <ion-item ng-repeat="guasto in guastiTmp">
+          <div class="list">
+            <a class="item item-thumbnail-left" href="">
+              <img src={{guasto.img}}>
+              <h2>{{guasto.titolo}}</h2>
+              <h4>{{guasto.tipo}}</h4>
+              <p>{{guasto.indirizzo}}</p>
+              <p class="word-wrap">{{guasto.descrizione}}</p>
+            </a>
+          </div>
+        </ion-item>
     </ion-list>
 
-      <img src="http://segnalazioneguasti.altervista.org/images/freccia_giu.png" id="frecciagiu" style="margin:10px" width="20" height="20" onClick="show(1,1)">
-      <span><img src="http://segnalazioneguasti.altervista.org/images/freccia_su.png" id="frecciasu" style="margin:10px" width="20" height="20" onClick="show(1,0)" hidden="hidden"></span>
+    <img src="http://segnalazioneguasti.altervista.org/images/freccia_giu.png" id="frecciagiu" style="margin:10px" width="20" height="20" onClick="show(1,1)"><span>
+    <img src="http://segnalazioneguasti.altervista.org/images/freccia_su.png" id="frecciasu" style="margin:10px" width="20" height="20" onClick="show(1,0)" hidden="hidden"></span>
 
-      <ion-item>
-
-          <div class="col">
-
-            <div class="row">
-                <div class="col text-center">
-                  <ion-label>Titolo</ion-label>
-                </div>
-                <div class="col text-center">
-                  <input placeholder="Titolo guasto">
-                </div>
-              </div>
-            <div class="row">
-              <div class="col text-center">
-                <ion-label>Guasto</ion-label>
-              </div>
-              <div class="col text-center">
-                <select>
-                <option value="Tipologia">Tipologia</option>
-                <option ng-repeat="tipologia in tipologie" value={{tipologia.tipo}}>{{tipologia.tipo}}</option>
-              </select></div>
-            </div>
-            <div class="row">
-              <div class="col text-center">
-                <ion-label>Comune</ion-label>
-              </div>
-            <div class="col text-center">
-              <select>
-              <option value="Comune">Comune</option>
-              <option ng-repeat="comune in comuni" value={{comune.nome}}>{{comune.nome}}</option>
-        </select>
-      </div>
-</div>
-</ion-item>
-
-<ion-item>
-    <center><ion-label>Descrizione</ion-label></center>
-    <center><textarea rows="4" cols="30" placeholder="inserisci la descrizione..." style="margin-bottom:10px">
-</textarea></center>
-  </ion-item>
-
-
-    <div class="row">
-      <div class="col">
-
-        <div class="row">
-          <div class="col text-center">
-              <button ion-button>Carica</button>
-          </div>
-          <div class="col text-center">
-              <button ion-button>Invia</button>
-          </div>
-        </div>
-  </ion-content>
+    <button class="button button-block button-positive" type="submit" >Aggiungi una segnalazione</button>
 </ion-view>
