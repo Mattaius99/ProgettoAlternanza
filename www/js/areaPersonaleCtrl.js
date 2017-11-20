@@ -11,17 +11,6 @@ angular.module('starter.controllers')
 
   $scope.benvenuto = null;
   $scope.guasti = new Array();
-  $scope.tipologie = new Array();
-  $scope.comuni = new Array();
-  $scope.guastiTmp;
-  $scope.titolo = null;
-  $scope.indirizzo = null;
-  $scope.descrizione = null;
-  $scope.data = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  $scope.urgenza = null;
-  $scope.img = null;
-  $scope.idTipo = null;
-  $scope.idCom = null;
 
   $http.get(linkSelect,{
     params: {
@@ -32,8 +21,16 @@ angular.module('starter.controllers')
     $scope.benvenuto = "Ciao, " + response.data.Utente[0].nome + " " + response.data.Utente[0].cognome;
   })
 
+  $http.get(linkSelect,{
+    params: {
+      t: 'Guasto'
+    }
+  }).then(function(response){
+    $scope.guasti=response.data.Guasto;
+    show();
+  });
+
   show = function(par, direction) {
-    var next = true;
     $scope.guastiTmp = new Array();
     if(direction == 1 && $scope.guasti.length >= $scope.pos){
       $scope.pos += 3;
@@ -62,29 +59,4 @@ angular.module('starter.controllers')
     if(par)
       $scope.$apply();
   };
-
-  seleziona = function(tab) {
-    $http.get(linkSelect,{
-      params: {
-        t: tab
-      }
-    }).then(function(response){
-      switch(tab) {
-        case 'Guasto':
-          $scope.guasti=response.data.Guasto;
-          show();
-          break;
-        case 'Tipologia':
-          $scope.tipologie=response.data.Tipologia;
-          break;
-        case 'Comune':
-          $scope.comuni=response.data.Comune;
-      }
-    })
-    show();
-  };
-
-  seleziona('Guasto');
-  seleziona('Tipologia');
-  seleziona('Comune');
 })
