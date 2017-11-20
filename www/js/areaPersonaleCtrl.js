@@ -35,7 +35,7 @@ angular.module('starter.controllers')
   show = function(par) {
     var next = true;
     $scope.guastiTmp = new Array();
-    if($scope.guasti.length == $scope.pos) {
+    if($scope.guasti.length >= $scope.pos) {
       document.getElementById("freccia").src="http://segnalazioneguasti.altervista.org/images/freccia_giu.png";
       next = true;
     }else{
@@ -101,4 +101,4 @@ angular.module('starter.controllers')
   seleziona('Guasto');
   seleziona('Tipologia');
   seleziona('Comune');
-});
+})
