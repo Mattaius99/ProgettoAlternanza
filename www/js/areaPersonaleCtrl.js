@@ -32,21 +32,21 @@ angular.module('starter.controllers')
     $scope.benvenuto = "Ciao, " + response.data.Utente[0].nome + " " + response.data.Utente[0].cognome;
   })
 
-  show = function(par) {
+  show = function(par, direction) {
     var next = true;
     $scope.guastiTmp = new Array();
-    if($scope.guasti.length >= $scope.pos) {
-      document.getElementById("freccia").src="http://segnalazioneguasti.altervista.org/images/freccia_giu.png";
-      next = true;
-    }else{
-      document.getElementById("freccia").src="http://segnalazioneguasti.altervista.org/images/freccia_su.png";
-      next = false;
+    if($scope.guasti.length >= $scope.pos){
+      document.getElementById("frecciasu").src="http://segnalazioneguasti.altervista.org/images/trasparente.png";
+      document.getElementById("frecciagiu").src="http://segnalazioneguasti.altervista.org/images/freccia_giu.png";
     }
-    if(next){
+    if($scope.guasti.length < $scope.pos){
+      document.getElementById("frecciasu").src="http://segnalazioneguasti.altervista.org/images/freccia_su.png";
+      document.getElementById("frecciagiu").src="http://segnalazioneguasti.altervista.org/images/trasparente.png";
+    }
+    if(direction)
       $scope.pos += 3;
-    }else{
+    else
       $scope.pos -= 3;
-    }
     var cont = 0;
     for (elem in $scope.guasti) {
       if (cont < $scope.pos) {
@@ -54,9 +54,8 @@ angular.module('starter.controllers')
         cont++;
       }
     }
-    $scope.pos = cont;
     if(par)
-     $scope.$apply();
+      $scope.$apply();
   };
 
   seleziona = function(tab) {
