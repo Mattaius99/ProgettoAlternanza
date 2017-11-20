@@ -1,0 +1,54 @@
+<ion-view view-title="segnala">
+  <ion-content>
+
+    <ion-list>
+      <form action="http://segnalazioneguasti.altervista.org/insert.php" method="get" enctype="multipart/form-data">
+
+        <input type="hidden" name="t" value="Guasto" required ></input>
+
+        <ion-item>
+          <ion-label color="primary">Titolo</ion-label>
+          <input type="text" name="titolo" required></input>
+        </ion-item>
+
+        <label class = "item item-input item-select">
+          <div class = "input-label">
+            Tipologia
+          </div>
+          <select name="id_tipo" required>
+            <option selected disabled>--Seleziona--</option>
+            <option ng-repeat="tipologia in tipologie" value="{{tipologia.id_Tipologia}}">{{tipologia.tipo}}</option>
+          </select>
+        </label>
+
+        <ion-item>
+          <ion-label color="primary" >Descrizione</ion-label>
+          <textarea class="description_textarea" name="descrizione" placeholder="Inserisci una descrizione"></textarea>
+        </ion-item>
+
+        <label class = "item item-input item-select">
+          <div class = "input-label">
+            Comune
+          </div>
+          <select name="id_comune" required>
+            <option selected disabled>--Seleziona--</option>
+            <option ng-repeat="comune in comuni" value="{{comune.id_Comune}}">{{comune.nome}}</option>
+          </select>
+        </label>
+
+        <ion-item>
+          <ion-label color="primary" stacked>Indirizzo</ion-label>
+          <input type="text" name="indirizzo" placeholder="Esempio: Via Giuseppe Verdi 10" required></input>
+        </ion-item>
+
+        <ion-item>
+        <ion-label color="primary" stacked>Allega un'immagine</ion-label>
+          <input type="file" name="fileToUpload" id="fileToUpload">
+        </ion-item>
+
+        <button class="button button-block button-positive" type="submit">Carica</button>
+      </form>
+    </ion-list>
+
+  </ion-content>
+</ion-view>
