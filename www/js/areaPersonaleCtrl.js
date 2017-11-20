@@ -4,19 +4,16 @@ angular.module('starter.controllers')
   var linkSelect="http://segnalazioneguasti.altervista.org/select.php";
   var linkInsert="http://segnalazioneguasti.altervista.org/insert.php";
 
-  var numSegnalazioni = 3;
-
   var today = new Date();
   var idUte = $stateParams.id_Utente;
-  var cont = 0;
 
-  $scope.pos = 3;
-  $scope.next = true;
+  $scope.pos = -3;
 
   $scope.benvenuto = null;
   $scope.guasti = new Array();
   $scope.tipologie = new Array();
   $scope.comuni = new Array();
+  $scope.guastiTmp;
   $scope.titolo = null;
   $scope.indirizzo = null;
   $scope.descrizione = null;
@@ -29,84 +26,59 @@ angular.module('starter.controllers')
   $http.get(linkSelect,{
     params: {
       t: 'Utente',
-      id: '15'
+      id: '24'
     }
   }).then(function(response){
     $scope.benvenuto = "Ciao, " + response.data.Utente[0].nome + " " + response.data.Utente[0].cognome;
   })
 
-  seleziona = function(tab, lim) {
-    console.log(lim);
-    $scope.guasti = new Array();
-    var tmp = 0;
+  show = function(par) {
+    var next = true;
+    $scope.guastiTmp = new Array();
+    if($scope.guasti.length == $scope.pos) {
+      document.getElementById("freccia").src="http://segnalazioneguasti.altervista.org/images/freccia_giu.png";
+      next = true;
+    }else{
+      document.getElementById("freccia").src="http://segnalazioneguasti.altervista.org/images/freccia_su.png";
+      next = false;
+    }
+    if(next){
+      $scope.pos += 3;
+    }else{
+      $scope.pos -= 3;
+    }
+    var cont = 0;
+    for (elem in $scope.guasti) {
+      if (cont < $scope.pos) {
+        $scope.guastiTmp[cont]=$scope.guasti[cont];
+        cont++;
+      }
+    }
+    $scope.pos = cont;
+    if(par)
+     $scope.$apply();
+  };
+
+  seleziona = function(tab) {
     $http.get(linkSelect,{
       params: {
         t: tab
-        //id: '15'
       }
     }).then(function(response){
-      switch(tab){
+      switch(tab) {
         case 'Guasto':
-          if(response.data.Guasto.length > lim && lim > 0){
-            for(cont=0; cont < lim; cont++, tmp++){
-              if(response.data.Guasto[tmp] != null){
-                $scope.guasti[cont]=response.data.Guasto[tmp];
-              }else{
-                break;
-              }
-            }
-          }else{
-            $scope.guasti=response.data.Guasto;
-          }
-          $scope.pos += tmp;
+          $scope.guasti=response.data.Guasto;
+          show();
           break;
         case 'Tipologia':
-          if(response.data.Tipologia.length > lim && lim > 0){
-            for(cont=0; cont < lim; cont++, tmp++){
-              if(response.data.Guasto[tmp] != null){
-                $scope.tipoliogie[cont]=response.data.Tipologia[tmp];
-              }else{
-                break;
-              }
-            }
-          }else{
-            $scope.tipologie=response.data.Tipologia;
-          }
+          $scope.tipologie=response.data.Tipologia;
           break;
-          case 'Comune':
-            if(response.data.Comune.length > lim && lim > 0){
-              for(cont=0; cont < lim; cont++, tmp++){
-                if(response.data.Guasto[tmp] != null){
-                  $scope.comuni[cont]=response.data.Comune[tmp];
-                }else{
-                  break;
-                }
-              }
-            }else{
-              $scope.comuni=response.data.Comune;
-            }
-            break;
-        }
+        case 'Comune':
+          $scope.comuni=response.data.Comune;
+      }
     })
-  }
-
-  freccia = function() {
-    if($scope.guasti.lenght <= $scope.pos) {
-      console.log("next");
-      document.getElementById("freccia").src="http://segnalazioneguasti.altervista.org/images/freccia_giu.png";
-      $scope.next = true;
-    }else{
-      document.getElementById("freccia").src="http://segnalazioneguasti.altervista.org/images/freccia_su.png";
-      $scope.next = false;
-    }
-    if($scope.next){
-      $scope.pos += 3;
-      seleziona('Guasto', $scope.pos);
-    }else{
-      $scope.pos -= 3;
-      seleziona('Guasto', $scope.pos);
-    }
-  }
+    show();
+  };
 
   carica = function() {
     $http.get(linkInsert,{
@@ -124,14 +96,9 @@ angular.module('starter.controllers')
         img: $scope.img
       }
     })
-<<<<<<< HEAD
-  }
-
-=======
   };
 
-  seleziona('Guasto',numSegnalazioni);
-  seleziona('Tipologia',0);
-  seleziona('Comune',0);
->>>>>>> 0a0bf60e22a369f08b49b53831510ed14df2931a
+  seleziona('Guasto');
+  seleziona('Tipologia');
+  seleziona('Comune');
 });

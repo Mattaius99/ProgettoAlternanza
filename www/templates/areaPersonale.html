@@ -1,4 +1,4 @@
-<ion-view view-title="Area Personale" ng-load="seleziona()">
+<ion-view cache-view="false" view-title="Area Personale" ng-load="seleziona()">
   <ion-content>
     <ion-item>
       <ion-label>
@@ -7,9 +7,8 @@
     </ion-item>
 
       <center><h2>Le tue segnalazioni</h2></center>
-
     <ion-list>
-      <ion-item ng-repeat="guasto in guasti">
+      <ion-item ng-repeat="guasto in guastiTmp">
       <div class="list">
 
     <a class="item item-thumbnail-left" href="">
@@ -23,8 +22,7 @@
   </ion-item>
     </ion-list>
 
-      <img src="http://segnalazioneguasti.altervista.org/images/freccia_giu.png" id="freccia" style="margin:10px" width="20" height="20" onClick="freccia()">
-
+      <img src="http://segnalazioneguasti.altervista.org/images/freccia_giu.png" id="freccia" style="margin:10px" width="20" height="20" onClick="show(1)">
 
       <ion-item>
 
@@ -72,7 +70,7 @@
 
     <div class="row">
       <ion-item><div class="col">
-        
+
 
       </div></ion-item>
       <ion-item><div class="col">
