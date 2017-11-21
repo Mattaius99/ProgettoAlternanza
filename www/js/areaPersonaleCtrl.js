@@ -61,23 +61,15 @@ angular.module('starter.controllers')
   $scope.openMap = function(index) {
     var address=$scope.guasti[index].indirizzo;
     address=address.replace(' ','+');
-    var city;
-    $http.get(linkSelect,{
-      params: {
-        t: 'Comune',
-        id: $scope.guasti[index].id_comune
-      }
-    }).then(function(response){
-      city=response.data.Comune[0].nome;
-      city=city.replace(' ','+');
-      var geoString = '';
-      if(ionic.Platform.isIOS()) {
-        geoString = 'maps://?q='+address+'+'+city+'';
-      }
-      else if(ionic.Platform.isAndroid()) {
-        geoString = 'geo://?q='+address+'+'+city+'';
-      }
-      window.open(geoString, '_system');
-    });
+    var city=
+    city=city.replace(' ','+');
+    var geoString = '';
+    if(ionic.Platform.isIOS()) {
+      geoString = 'maps://?q='+address+'+'+city+'';
+    }
+    else if(ionic.Platform.isAndroid()) {
+      geoString = 'geo://?q='+address+'+'+city+'';
+    }
+    window.open(geoString, '_system');
   }
 })
