@@ -82,5 +82,4 @@ angular.module('starter.controllers')
     }
     window.open(geoString, '_system');
   }
-
 })
