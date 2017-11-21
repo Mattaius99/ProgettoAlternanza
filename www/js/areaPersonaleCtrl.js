@@ -59,4 +59,8 @@ angular.module('starter.controllers')
     if(par)
       $scope.$apply();
   };
+
+  openMap = function() {
+    console.log("ok");
+  }
 })

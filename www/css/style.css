@@ -2,3 +2,10 @@
 .word-wrap{
   white-space: normal!important;
 }
+.no_border{
+  border:none;
+  margin-bottom: 0px;
+}
+.item:active{
+  background-color: white!important;
+}
