@@ -2,9 +2,7 @@ angular.module('starter.controllers')
 
 .controller('areaPersonaleCtrl', function($scope, $http, $stateParams){
   var linkSelect="http://segnalazioneguasti.altervista.org/select.php";
-  var linkInsert="http://segnalazioneguasti.altervista.org/insert.php";
 
-  var today = new Date();
   var idUte = $stateParams.id_Utente;
 
   $scope.pos = 3;
@@ -71,16 +69,16 @@ angular.module('starter.controllers')
       }
     }).then(function(response){
       city=response.data.Comune[0].nome;
+      city=city.replace(' ','+');
+      var geoString = '';
+      if(ionic.Platform.isIOS()) {
+        geoString = 'maps://?q='+address+'+'+city+'';
+      }
+      else if(ionic.Platform.isAndroid()) {
+        geoString = 'geo://?q='+address+'+'+city+'';
+      }
+      window.open(geoString, '_system');
     });
-    var geoString = '';
-    if(ionic.Platform.isIOS()) {
-      geoString = 'maps://?q='+address+'+'+city+'';
-    }
-    else if(ionic.Platform.isAndroid()) {
-      console.log(city);
-      geoString = 'geo://?q='+address+'+'+city+'';
-    }
-    window.open(geoString, '_system');
   }
 
 })
