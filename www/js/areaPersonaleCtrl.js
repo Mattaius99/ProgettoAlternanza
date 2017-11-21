@@ -63,4 +63,5 @@ angular.module('starter.controllers')
   openMap = function() {
     console.log("ok");
   }
+
 })

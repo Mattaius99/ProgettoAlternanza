@@ -6,6 +6,17 @@
   border:none;
   margin-bottom: 0px;
 }
-.item:active{
+.item-thumbnail-left{
   background-color: white!important;
+  display: block;
+  margin-right: auto;
+}
+
+.item:active{
+background-color: red!important;
+
+}
+.icona{
+    display: block;
+    margin-left: auto;
 }
