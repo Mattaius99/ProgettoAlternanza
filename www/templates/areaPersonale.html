@@ -5,20 +5,23 @@
         {{benvenuto}}
       </ion-label>
     </ion-item>
-
-    <center><h2>Le tue segnalazioni</h2></center>
+    <center><h2 class="segn">Le tue segnalazioni</h2></center>
       <ion-list>
-        <ion-item ng-repeat="guasto in guastiTmp track by $index">
-            <a class="item item-thumbnail-left no_border" href="">
-              <img src={{guasto.img}}>
-              <h2>{{guasto.titolo}}</h2>
-              <h4>{{guasto.tipo}}</h4>
-              <p>{{guasto.indirizzo}}</p>
-              <p class="word-wrap">{{guasto.descrizione}}</p>
-            </a>
-            <img class="icona" ng-src="http://segnalazioneguasti.altervista.org/images/mappa.png" ng-click="openMap($index)" data-role="button" height="20" width="14">
-        </ion-item>
-      </ion-list>
+
+
+          <ion-item class="no_border" ng-repeat="guasto in guastiTmp track by $index">
+              <a class="item item-thumbnail-left" href="">
+                <img src={{guasto.img}}>
+                <h2>{{guasto.titolo}}</h2>
+                <h4>{{guasto.tipo}}</h4>
+                <p>{{guasto.indirizzo}}</p>
+                <p class="word-wrap">{{guasto.descrizione}}</p>
+                <img class="icona" ng-src="http://segnalazioneguasti.altervista.org/images/mappa.png" ng-Click="openMap($index)" data-role="button" height="20" width="14" >
+              </a>
+          </ion-item>
+
+
+    </ion-list>
 
     <img src="http://segnalazioneguasti.altervista.org/images/freccia_giu.png" id="frecciagiu" style="margin:10px" width="20" height="20" onClick="show(1,1)"><span>
     <img src="http://segnalazioneguasti.altervista.org/images/freccia_su.png" id="frecciasu" style="margin:10px" width="20" height="20" onClick="show(1,0)" hidden="hidden"></span>
