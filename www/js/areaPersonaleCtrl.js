@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 
-.controller('areaPersonaleCtrl', function($scope, $http, $stateParams, $window){
+.controller('areaPersonaleCtrl', function($scope, $http, $stateParams){
   var linkSelect="http://segnalazioneguasti.altervista.org/select.php";
   var linkInsert="http://segnalazioneguasti.altervista.org/insert.php";
 
@@ -60,7 +60,26 @@ angular.module('starter.controllers')
       $scope.$apply();
   };
 
-  openMap = function() {
-    console.log("ok");
+  $scope.openMap = function(index) {
+    var address=$scope.guasti[index].indirizzo;
+    address=address.replace(' ','+');
+    var city;
+    $http.get(linkSelect,{
+      params: {
+        t: 'Comune',
+        id: $scope.guasti[index].id_comune
+      }
+    }).then(function(response){
+      city=response.data.Comune[0].nome;
+    });
+    var geoString = '';
+    if(ionic.Platform.isIOS()) {
+      geoString = 'maps://?q='+address+'+'+city+'';
+    }
+    else if(ionic.Platform.isAndroid()) {
+      console.log(city);
+      geoString = 'geo://?q='+address+'+'+city+'';
+    }
+    window.open(geoString, '_system');
   }
 })

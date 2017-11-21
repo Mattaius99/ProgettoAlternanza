@@ -8,7 +8,7 @@
 
     <center><h2>Le tue segnalazioni</h2></center>
       <ion-list>
-        <ion-item ng-repeat="guasto in guastiTmp">
+        <ion-item ng-repeat="guasto in guastiTmp track by $index">
           <div class="item item-thumbnail-left list">
             <a class="item item-thumbnail-left no_border" href="">
               <img src={{guasto.img}}>
@@ -17,7 +17,7 @@
               <p>{{guasto.indirizzo}}</p>
               <p class="word-wrap">{{guasto.descrizione}}</p>
             </a>
-            <img src="http://segnalazioneguasti.altervista.org/images/mappa.png" data-role="button" height="20" width="14" style="position:relative; left:355px" onClick="openMap()">
+            <img ng-src="http://segnalazioneguasti.altervista.org/images/mappa.png" ng-click="openMap($index)" data-role="button" height="20" width="14" style="position:relative; left:355px">
           </div>
         </ion-item>
     </ion-list>
