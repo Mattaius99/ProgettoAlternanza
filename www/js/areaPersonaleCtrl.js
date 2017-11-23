@@ -59,18 +59,20 @@ angular.module('starter.controllers')
   };
 
   $scope.openMap = function(index) {
+    var path=location.href+"/www/json/comuni.json";
     var address=$scope.guasti[index].indirizzo;
     address=address.replace(' ','+');
-    var city=
-    city=city.replace(' ','+');
-    var geoString = '';
-    if(ionic.Platform.isIOS()) {
-      geoString = 'maps://?q='+address+'+'+city+'';
-    }
-    else if(ionic.Platform.isAndroid()) {
-      geoString = 'geo://?q='+address+'+'+city+'';
-    }
-    window.open(geoString, '_system');
+    $http.get(path).success(function(data) {
+      city = data;
+      city=city.replace(' ','+');
+      var geoString = '';
+      if(ionic.Platform.isIOS()) {
+        geoString = 'maps://?q='+address+'+'+city+'';
+      }
+      else if(ionic.Platform.isAndroid()) {
+        geoString = 'geo://?q='+address+'+'+city+'';
+      }
+      window.open(geoString, '_system');
+    });
   }
-
 })

@@ -20,3 +20,35 @@ background-color: #E5E4E2	!important;
     display: block;
     margin-left: auto;
 }
+
+textarea.description_textarea{
+  width: 100%;
+  height: 70px;
+  resize: none;
+}
+
+.fileContainer {
+    overflow: hidden;
+    position: relative;
+}
+
+.fileContainer [type=file] {
+    cursor: inherit;
+    display: block;
+    font-size: 999px;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+}
+
+i.ion-images{
+  font-size: 200%;
+}
+i.ion-camera{
+  font-size: 200%;
+}
