@@ -2,9 +2,10 @@
   <ion-content>
 
     <ion-list>
-      <form action="http://segnalazioneguasti.altervista.org/insert.php" method="get" enctype="multipart/form-data">
+      <form action="http://segnalazioneguasti.altervista.org/insert.php" method="POST" enctype="multipart/form-data">
 
         <input type="hidden" name="t" value="Guasto" required ></input>
+        <input type="hidden" name="id_utente" value="{{isAuthenticated}}" required ></input>
 
         <ion-item>
           <ion-label color="primary">Titolo</ion-label>
@@ -30,9 +31,9 @@
           <div class = "input-label">
             Comune
           </div>
-          <select name="id_comune" required>
+          <select name="id_comune" >
             <option selected disabled>--Seleziona--</option>
-            <option ng-repeat="comune in comuni" value="{{comune.id_Comune}}">{{comune.nome}}</option>
+            <option ng-repeat="comune in comuni" value="{{comune.codice}}">{{comune.nome}}</option>
           </select>
         </label>
 
@@ -42,11 +43,19 @@
         </ion-item>
 
         <ion-item>
-        <ion-label color="primary" stacked>Allega un'immagine</ion-label>
-          <input type="file" name="fileToUpload" id="fileToUpload">
+          <ion-label color="primary" stacked>Allega un'immagine
+            <label style="padding-left:20px">
+              <label class="fileContainer">
+                <i class="ion-images"></i>
+                <input type="file" name="fileToUpload" id="fileToUpload">
+              </label>
+            <i class="ion-camera" style="padding-left:7px"></i>
+          </label>
+          </ion-label>
+
         </ion-item>
 
-        <button class="button button-block button-positive" type="submit">Carica</button>
+        <button class="button button-block button-positive" type="submit" onclick="showAlert()">Carica</button>
       </form>
     </ion-list>
 

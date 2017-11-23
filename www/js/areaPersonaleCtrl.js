@@ -59,16 +59,11 @@ angular.module('starter.controllers')
   };
 
   $scope.openMap = function(index) {
+    var path=location.href+"/www/json/comuni.json";
     var address=$scope.guasti[index].indirizzo;
     address=address.replace(' ','+');
-    var city;
-    $http.get(linkSelect,{
-      params: {
-        t: 'Comune',
-        id: $scope.guasti[index].id_comune
-      }
-    }).then(function(response){
-      city=response.data.Comune[0].nome;
+    $http.get(path).success(function(data) {
+      city = data;
       city=city.replace(' ','+');
       var geoString = '';
       if(ionic.Platform.isIOS()) {
@@ -80,5 +75,4 @@ angular.module('starter.controllers')
       window.open(geoString, '_system');
     });
   }
-
 })
