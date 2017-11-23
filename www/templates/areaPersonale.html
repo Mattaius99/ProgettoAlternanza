@@ -1,4 +1,4 @@
-<ion-view cache-view="false" view-title="Area Personale" ng-app="areaPersonale">
+<ion-view view-title="Area Personale" cache-view="false" ng-app="areaPersonale"> 
   <ion-content>
     <ion-item>
       <ion-label>
@@ -11,7 +11,7 @@
 
           <ion-item class="no_border" ng-repeat="guasto in guastiTmp track by $index">
               <a class="item item-thumbnail-left" href="">
-                <img src={{guasto.img}}>
+                <img class"imm" src={{guasto.img}}>
                 <h2>{{guasto.titolo}}</h2>
                 <h4>{{guasto.tipo}}</h4>
                 <p>{{guasto.indirizzo}}</p>

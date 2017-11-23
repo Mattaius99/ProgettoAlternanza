@@ -6,11 +6,11 @@
   border:none;
   margin-bottom: 0px;
 }
-.item-thumbnail-left:active{
-background-color: #E5E4E2	!important;
-  display: block;
-  margin-right: auto;
+
+.item-thumbnail-left{
+    border-radius: 20px
 }
+
 
 .segn{
   padding-top: 10px
@@ -19,4 +19,8 @@ background-color: #E5E4E2	!important;
 .icona{
     display: block;
     margin-left: auto;
+}
+
+.imm{
+  border-radius: 20px;
 }
