@@ -2,16 +2,24 @@
 <ion-view cache-view="false" view-title="Area Personale">
   <ion-content>
     <ion-item>
-      <ion-label>
-        {{benvenuto}}
-      </ion-label>
+      <div class="col-sm-4">
+        <div>
+          <form name="form" target="frame" action="http://segnalazioneguasti.altervista.org/loadImgUser.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id_utente" value="{{idUte}}">
+            <label class="fileContainer">
+              <img id="imgUte" class="img-circle">
+              <input type="file" name="fileToUpload" id="fileToUpload" onchange="cambia()">
+            </label>
+          </form>
+          <h2>Benvenuto {{benvenuto}}</h2>
+        </div>
+      </div>
     </ion-item>
-    <center><h2 class="segn">Le tue segnalazioni</h2></center>
       <ion-list>
 
 
           <ion-item class="no_border" ng-repeat="guasto in guastiTmp track by $index">
-              <a class="item item-thumbnail-left" href="">
+              <a class="item item-thumbnail-left" href="#/app/dettaglio/{{guasto.id_Guasto}}">
                 <img class"imm" src={{guasto.img}}>
                 <h2>{{guasto.titolo}}</h2>
                 <h4>{{guasto.tipo}}</h4>

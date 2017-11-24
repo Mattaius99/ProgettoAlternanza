@@ -313,8 +313,8 @@
 .ion-ios-box-outline:before,
 .ion-ios-briefcase:before,
 .ion-ios-briefcase-outline:before,
-.ion-ios-areaPersonalers:before,
-.ion-ios-areaPersonalers-outline:before,
+.ion-ios-browsers:before,
+.ion-ios-browsers-outline:before,
 .ion-ios-calculator:before,
 .ion-ios-calculator-outline:before,
 .ion-ios-calendar:before,
@@ -1648,10 +1648,10 @@
 .ion-ios-briefcase-outline:before {
   content: ""; }
 
-.ion-ios-areaPersonalers:before {
+.ion-ios-browsers:before {
   content: ""; }
 
-.ion-ios-areaPersonalers-outline:before {
+.ion-ios-browsers-outline:before {
   content: ""; }
 
 .ion-ios-calculator:before {
@@ -3007,7 +3007,7 @@ q:before, q:after {
   content: none; }
 
 /**
- * Prevent modern areaPersonalers from displaying `audio` without controls.
+ * Prevent modern browsers from displaying `audio` without controls.
  * Remove excess height in iOS 5 devices.
  */
 audio:not([controls]) {
@@ -3091,7 +3091,7 @@ dfn {
   font-style: italic; }
 
 /**
- * Address differences between Firefox and other areaPersonalers.
+ * Address differences between Firefox and other browsers.
  */
 hr {
   -moz-box-sizing: content-box;
@@ -3109,7 +3109,7 @@ samp {
   font-family: monospace, serif; }
 
 /**
- * Improve readability of pre-formatted text in all areaPersonalers.
+ * Improve readability of pre-formatted text in all browsers.
  */
 pre {
   white-space: pre-wrap; }
@@ -3121,13 +3121,13 @@ q {
   quotes: "\201C" "\201D" "\2018" "\2019"; }
 
 /**
- * Address inconsistent and variable font size in all areaPersonalers.
+ * Address inconsistent and variable font size in all browsers.
  */
 small {
   font-size: 80%; }
 
 /**
- * Prevent `sub` and `sup` affecting `line-height` in all areaPersonalers.
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
  */
 sub,
 sup {
@@ -3161,8 +3161,8 @@ legend {
   /* 1 */ }
 
 /**
- * 1. Correct font family not being inherited in all areaPersonalers.
- * 2. Correct font size not being inherited in all areaPersonalers.
+ * 1. Correct font family not being inherited in all browsers.
+ * 2. Correct font size not being inherited in all browsers.
  * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
  * 4. Remove any default :focus styles
  * 5. Make sure webkit font smoothing is being inherited
@@ -3261,7 +3261,7 @@ input::-moz-focus-inner {
 
 /**
  * 1. Remove default vertical scrollbar in IE 8/9.
- * 2. Improve readability and alignment in all areaPersonalers.
+ * 2. Improve readability and alignment in all browsers.
  */
 textarea {
   overflow: auto;
@@ -9681,7 +9681,7 @@ a.button {
   .item-right-edit {
     right: constant(safe-area-inset-right);
     right: env(safe-area-inset-right); }
-  .platform-ios.platform-areaPersonaler.platform-ipad {
+  .platform-ios.platform-browser.platform-ipad {
     position: fixed; } }
 
 .platform-c:not(.enable-transitions) * {

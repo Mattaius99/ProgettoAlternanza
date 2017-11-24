@@ -1,0 +1,28 @@
+<ion-view view-title="Segnalazione">
+  <ion-content>
+
+    <!-- immagine inerente al guasto -->
+    <div id="img">
+      <img src="http://segnalazioneguasti.altervista.org/images/{{guasti[posizione].img}}" alt="guasto" width="100%" height="350px">
+    </div>
+
+    <!-- titolo del guasto -->
+    <div id="main">
+      <div id="div_title">
+          <h2 id="title">{{guasti[posizione].titolo}}</h2>
+      </div>
+
+      <!-- dttagli guasto -->
+      <div id="details">
+        <p class="description">{{comune[posizione_comune].nome}}({{comune[posizione_comune].provincia.nome}})</p>
+        <p class="description">{{guasti[posizione].descrizione}}<br></p>
+        <p class="description">{{guasti[posizione].data}}<span style="display:inline;border-style: solid;border-width: 1px;border-radius: 12px;border-color: black;color:white;{{urgenza_color}}">{{risolto}}</span></p>
+  		</div>
+    </div>
+
+    <!-- mappa -->
+    <div id="map"></div>
+
+
+  </ion-content>
+</ion-view>

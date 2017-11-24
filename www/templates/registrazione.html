@@ -1,0 +1,37 @@
+<ion-view view-title="Registrazione" ng-if="!isAuthenticated">
+  <ion-content style="margin-top:40px">
+    <div class="list card">
+      <form action="http://segnalazioneguasti.altervista.org/insert.php" method="post">
+
+        <input type="hidden" name="t" value="Utente" required>
+
+        <div class="list">
+          <label class="item item-input">
+            <span class="input-label">Nome</span>
+            <input type="text" name="nome" ng-model="loginData.name1" required>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Cognome</span>
+            <input type="text" name="cognome" ng-model="loginData.lastname" required>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">E-Mail</span>
+            <input type="email" name="email" ng-model="loginData.mail" required>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Username</span>
+            <input type="text" name="username" ng-model="loginData.username1" required>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Password</span>
+            <input type="password" name="password" ng-model="loginData.password1" required>
+          </label>
+        </div>
+       <label class="item">
+       <button  class="button button-block button-assertive" type="submit" ng-click="">Registrati</button>
+      </label>
+      </form>
+    </div>
+
+</ion-content>
+</ion-view>

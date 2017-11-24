@@ -463,7 +463,7 @@ window.ionic.version = '1.3.4';
  *
  * Author: Max Lynch <max@drifty.com>
  *
- * Framework events handles various mobile areaPersonaler events, and
+ * Framework events handles various mobile browser events, and
  * detects special events like tap/swipe/etc. and emits them
  * as custom events that can be used in an app.
  *
@@ -487,7 +487,7 @@ window.ionic.version = '1.3.4';
         evt = document.createEvent("CustomEvent");
         evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
       } catch (error) {
-        // fallback for areaPersonalers that don't support createEvent('CustomEvent')
+        // fallback for browsers that don't support createEvent('CustomEvent')
         evt = document.createEvent("Event");
         for (var param in params) {
           evt[param] = params[param];
@@ -648,11 +648,11 @@ window.ionic.version = '1.3.4';
 
   // default settings
   ionic.Gestures.defaults = {
-    // add css to the element to prevent the areaPersonaler from doing
+    // add css to the element to prevent the browser from doing
     // its native behavior. this doesnt prevent the scrolling,
     // but cancels the contextmenu, tap highlighting etc
     // set to false to disable this
-    stop_areaPersonaler_behavior: 'disable-user-behavior'
+    stop_browser_behavior: 'disable-user-behavior'
   };
 
   // detect touchevents
@@ -752,9 +752,9 @@ window.ionic.version = '1.3.4';
         ionic.Gestures.utils.extend({}, ionic.Gestures.defaults),
         options || {});
 
-    // add some css to the element to prevent the areaPersonaler from doing its native behavoir
-    if(this.options.stop_areaPersonaler_behavior) {
-      ionic.Gestures.utils.stopDefaultareaPersonalerBehavior(this.element, this.options.stop_areaPersonaler_behavior);
+    // add some css to the element to prevent the browser from doing its native behavoir
+    if(this.options.stop_browser_behavior) {
+      ionic.Gestures.utils.stopDefaultBrowserBehavior(this.element, this.options.stop_browser_behavior);
     }
 
     // start detection on touchstart
@@ -968,7 +968,7 @@ window.ionic.version = '1.3.4';
 
 
     /**
-     * we have different events for each device/areaPersonaler
+     * we have different events for each device/browser
      * determine what we need and set them in the ionic.Gestures.EVENT_TYPES constant
      */
     determineEventTypes: function determineEventTypes() {
@@ -986,7 +986,7 @@ window.ionic.version = '1.3.4';
           'touchmove',
           'touchend touchcancel'];
       }
-      // for non pointer events areaPersonalers and mixed areaPersonalers,
+      // for non pointer events browsers and mixed browsers,
       // like chrome on windows8 touch laptop
       else {
         types = [
@@ -1047,8 +1047,8 @@ window.ionic.version = '1.3.4';
         srcEvent: ev,
 
         /**
-         * prevent the areaPersonaler default actions
-         * mostly used to disable scrolling of the areaPersonaler
+         * prevent the browser default actions
+         * mostly used to disable scrolling of the browser
          */
         preventDefault: function() {
           if(this.srcEvent.preventManipulation) {
@@ -1318,11 +1318,11 @@ window.ionic.version = '1.3.4';
 
 
     /**
-     * stop areaPersonaler default behavior with css class
+     * stop browser default behavior with css class
      * @param   {HtmlElement}   element
      * @param   {Object}        css_class
      */
-    stopDefaultareaPersonalerBehavior: function stopDefaultareaPersonalerBehavior(element, css_class) {
+    stopDefaultBrowserBehavior: function stopDefaultBrowserBehavior(element, css_class) {
       // changed from making many style changes to just adding a preset classname
       // less DOM manipulations, less code, and easier to control in the CSS side of things
       // hammer.js doesn't come with CSS, but ionic does, which is why we prefer this method
@@ -1775,7 +1775,7 @@ window.ionic.version = '1.3.4';
       correct_for_drag_min_distance: true,
       // set 0 for unlimited, but this can conflict with transform
       drag_max_touches: 1,
-      // prevent default areaPersonaler behavior when dragging occurs
+      // prevent default browser behavior when dragging occurs
       // be careful with it, it makes the element a blocking element
       // when you are using the drag gesture, it is a good practice to set this true
       drag_block_horizontal: true,
@@ -1873,7 +1873,7 @@ window.ionic.version = '1.3.4';
           // direction event, like dragdown
           inst.trigger(this.name + ev.direction, ev);
 
-          // block the areaPersonaler events
+          // block the browser events
           if( (inst.options.drag_block_vertical && ionic.Gestures.utils.isVertical(ev.direction)) ||
               (inst.options.drag_block_horizontal && !ionic.Gestures.utils.isVertical(ev.direction))) {
                 ev.preventDefault();
@@ -1906,7 +1906,7 @@ window.ionic.version = '1.3.4';
       transform_min_scale: 0.01,
       // rotation in degrees
       transform_min_rotation: 1,
-      // prevent default areaPersonaler behavior when two touches are on the screen
+      // prevent default browser behavior when two touches are on the screen
       // but it makes the element a blocking element
       // when you are using the transform gesture, it is a good practice to set this true
       transform_always_block: false
@@ -2086,7 +2086,7 @@ window.ionic.version = '1.3.4';
   var self = ionic.Platform = {
 
     // Put navigator on platform so it can be mocked and set
-    // the areaPersonaler does not allow window.navigator to be set
+    // the browser does not allow window.navigator to be set
     navigator: window.navigator,
 
     /**
@@ -2129,9 +2129,9 @@ window.ionic.version = '1.3.4';
      * anywhere and does not need to be wrapped by any additonal methods.
      * When the app is within a WebView (Cordova), it'll fire
      * the callback once the device is ready. If the app is within
-     * a web areaPersonaler, it'll fire the callback after `window.load`.
+     * a web browser, it'll fire the callback after `window.load`.
      * Please remember that Cordova features (Camera, FileSystem, etc) still
-     * will not work in a web areaPersonaler.
+     * will not work in a web browser.
      * @param {function} callback The function to call.
      */
     ready: function(cb) {
@@ -2200,7 +2200,7 @@ window.ionic.version = '1.3.4';
           self.platforms.push('trigger');
         }
       } else {
-        self.platforms.push('areaPersonaler');
+        self.platforms.push('browser');
       }
       if (self.isIPad()) self.platforms.push('ipad');
 
@@ -2473,7 +2473,7 @@ window.ionic.version = '1.3.4';
       document.addEventListener("deviceready", onPlatformReady, false);
     } else {
       // the window and scripts are fully loaded, but the window object doesn't have the
-      // cordova/phonegap object, so its just a areaPersonaler, not a webview wrapped w/ cordova
+      // cordova/phonegap object, so its just a browser, not a webview wrapped w/ cordova
       onPlatformReady();
     }
     if (windowLoadListenderAttached) {
@@ -2626,10 +2626,10 @@ window.ionic.version = '1.3.4';
  * @name tap
  * @module ionic
  * @description
- * On touch devices such as a phone or tablet, some areaPersonalers implement a 300ms delay between
- * the time the user stops touching the display and the moment the areaPersonaler executes the
- * click. This delay was initially introduced so the areaPersonaler can know whether the user wants to
- * double-tap to zoom in on the webpage.  Basically, the areaPersonaler waits roughly 300ms to see if
+ * On touch devices such as a phone or tablet, some browsers implement a 300ms delay between
+ * the time the user stops touching the display and the moment the browser executes the
+ * click. This delay was initially introduced so the browser can know whether the user wants to
+ * double-tap to zoom in on the webpage.  Basically, the browser waits roughly 300ms to see if
  * the user is double-tapping, or just tapping on the display once.
  *
  * Out of the box, Ionic automatically removes the 300ms delay in order to make Ionic apps
@@ -2637,14 +2637,14 @@ window.ionic.version = '1.3.4';
  * [fastclick](https://github.com/ftlabs/fastclick) and Angular's
  * [ngTouch](https://docs.angularjs.org/api/ngTouch) should not be included, to avoid conflicts.
  *
- * Some areaPersonalers already remove the delay with certain settings, such as the CSS property
+ * Some browsers already remove the delay with certain settings, such as the CSS property
  * `touch-events: none` or with specific meta tag viewport values. However, each of these
- * areaPersonalers still handle clicks differently, such as when to fire off or cancel the event
+ * browsers still handle clicks differently, such as when to fire off or cancel the event
  * (like scrolling when the target is a button, or holding a button down).
- * For areaPersonalers that already remove the 300ms delay, consider Ionic's tap system as a way to
+ * For browsers that already remove the 300ms delay, consider Ionic's tap system as a way to
  * normalize how clicks are handled across the various devices so there's an expected response
  * no matter what the device, platform or version. Additionally, Ionic will prevent
- * ghostclicks which even areaPersonalers that remove the delay still experience.
+ * ghostclicks which even browsers that remove the delay still experience.
  *
  * In some cases, third-party libraries may also be working with touch events which can interfere
  * with the tap system. For example, mapping libraries like Google or Leaflet Maps often implement
@@ -3685,7 +3685,7 @@ var keyboardFocusOutTimer;
 
 /**
  * on Android, orientationchange will fire before the keyboard plugin notifies
- * the areaPersonaler that the keyboard will show/is showing, so this flag indicates
+ * the browser that the keyboard will show/is showing, so this flag indicates
  * to nativeShow that there was an orientationChange and we should update
  * the viewport height with an accurate keyboard height value
  */
@@ -3915,7 +3915,7 @@ function keyboardFocusIn(e) {
     ionic.keyboard.isClosing = false;
   }
 
-  // attempt to prevent areaPersonaler from natively scrolling input into view while
+  // attempt to prevent browser from natively scrolling input into view while
   // we are trying to do the same (while we are scrolling) if the user taps the
   // keyboard
   document.addEventListener('keydown', keyboardOnKeyDown, false);
@@ -4010,7 +4010,7 @@ function keyboardOrientationChange() {
 }
 
 /**
- * Event handler for 'keydown' event. Tries to prevent areaPersonaler from natively
+ * Event handler for 'keydown' event. Tries to prevent browser from natively
  * scrolling an input into view when a user taps the keyboard while we are
  * scrolling the input into view ourselves with JS.
  */
@@ -4214,7 +4214,7 @@ function keyboardGetHeight() {
   }
 
   // fallback for when it's the webview without the plugin
-  // or for just the standard web areaPersonaler
+  // or for just the standard web browser
   // TODO: have these be based on device
   if (ionic.Platform.isIOS()) {
     if (ionic.keyboard.isLandscape) {
@@ -4405,7 +4405,7 @@ function viewportUpdate() {
 
     if (version > 7) {
       // iPad >= 7.1
-      // https://issues.apache.org/jira/areaPersonale/CB-4323
+      // https://issues.apache.org/jira/browse/CB-4323
       delete viewportProperties.width;
 
     } else {
@@ -4423,7 +4423,7 @@ function viewportUpdate() {
           viewportProperties.height = DEVICE_HEIGHT;
         }
       } else {
-        // iPad <= 6.1 areaPersonaler
+        // iPad <= 6.1 Browser
         if (version < 7) {
           viewportProperties.height = '0';
         }
@@ -4451,10 +4451,10 @@ function viewportUpdate() {
       }
 
     } else {
-      // iPhone areaPersonaler
+      // iPhone Browser
 
       if (version < 7) {
-        // iPhone <= 6.1 areaPersonaler
+        // iPhone <= 6.1 Browser
         // if height was set it needs to get removed with this hack for <= 6.1
         if (initHeight) viewportProperties.height = '0';
       }
@@ -4789,7 +4789,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__content = options.el.firstElementChild;
 
     //Remove any scrollTop attached to these elements; they are virtual scroll now
-    //This also stops on-load-scroll-to-window.location.hash that the areaPersonaler does
+    //This also stops on-load-scroll-to-window.location.hash that the browser does
     setTimeout(function() {
       if (self.__container && self.__content) {
         self.__container.scrollTop = 0;
@@ -5122,7 +5122,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   __decelerationVelocityY: null,
 
 
-  /** the areaPersonaler-specific property to use for transforms */
+  /** the browser-specific property to use for transforms */
   __transformProperty: null,
   __perspectiveProperty: null,
 
@@ -8333,8 +8333,8 @@ ionic.views.Slider = ionic.views.View.inherit({
     var noop = function() {}; // simple no operation function
     var offloadFn = function(fn) { setTimeout(fn || noop, 0); }; // offload a functions execution
 
-    // check areaPersonaler capabilities
-    var areaPersonaler = {
+    // check browser capabilities
+    var browser = {
       addEventListener: !!window.addEventListener,
       transitions: (function(temp) {
         var props = ['transitionProperty', 'WebkitTransition', 'MozTransition', 'OTransition', 'msTransition'];
@@ -8370,7 +8370,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       if (slides.length < 2) options.continuous = false;
 
       //special case if two slides
-      if (areaPersonaler.transitions && options.continuous && slides.length < 3) {
+      if (browser.transitions && options.continuous && slides.length < 3) {
         element.appendChild(slides[0].cloneNode(true));
         element.appendChild(element.children[1].cloneNode(true));
         slides = element.children;
@@ -8393,7 +8393,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         slide.style.width = width + 'px';
         slide.setAttribute('data-index', pos);
 
-        if (areaPersonaler.transitions) {
+        if (browser.transitions) {
           slide.style.left = (pos * -width) + 'px';
           move(pos, index > pos ? -width : (index < pos ? width : 0), 0);
         }
@@ -8401,12 +8401,12 @@ ionic.views.Slider = ionic.views.View.inherit({
       }
 
       // reposition elements before and after index
-      if (options.continuous && areaPersonaler.transitions) {
+      if (options.continuous && browser.transitions) {
         move(circle(index - 1), -width, 0);
         move(circle(index + 1), width, 0);
       }
 
-      if (!areaPersonaler.transitions) element.style.left = (index * -width) + 'px';
+      if (!browser.transitions) element.style.left = (index * -width) + 'px';
 
       container.style.visibility = 'visible';
 
@@ -8444,7 +8444,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         return;
       }
 
-      if (areaPersonaler.transitions) {
+      if (browser.transitions) {
 
         var direction = Math.abs(index - to) / (index - to); // 1: backward, -1: forward
 
@@ -8475,7 +8475,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
         to = circle(to);
         animate(index * -width, to * -width, slideSpeed || speed);
-        //no fallback for a circular continuous if the areaPersonaler does not accept transitions
+        //no fallback for a circular continuous if the browser does not accept transitions
       }
 
       index = to;
@@ -8890,7 +8890,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       slides && (slides = []);
 
       // removed event listeners
-      if (areaPersonaler.addEventListener) {
+      if (browser.addEventListener) {
 
         // remove current event listeners
         element.removeEventListener(touchStartEvent, events, false);
@@ -8919,13 +8919,13 @@ ionic.views.Slider = ionic.views.View.inherit({
 
 
       // add event listeners
-      if (areaPersonaler.addEventListener) {
+      if (browser.addEventListener) {
 
         // set touchstart event on element
         element.addEventListener(touchStartEvent, events, false);
         element.addEventListener(mouseStartEvent, events, false);
 
-        if (areaPersonaler.transitions) {
+        if (browser.transitions) {
           element.addEventListener('webkitTransitionEnd', events, false);
           element.addEventListener('msTransitionEnd', events, false);
           element.addEventListener('oTransitionEnd', events, false);
@@ -10033,7 +10033,7 @@ ionic.views.Slider = ionic.views.View.inherit({
             var moveCapture = s.params.nested ? true : false;
 
             //Touch Events
-            if (s.areaPersonaler.ie) {
+            if (s.browser.ie) {
                 touchEventsTarget[action](s.touchEvents.start, s.onTouchStart, false);
                 target[action](s.touchEvents.move, s.onTouchMove, moveCapture);
                 target[action](s.touchEvents.end, s.onTouchEnd, false);
@@ -10298,7 +10298,7 @@ ionic.views.Slider = ionic.views.View.inherit({
             if (isScrolling) {
                 s.emit('onTouchMoveOpposite', s, e);
             }
-            if (typeof startMoving === 'undefined' && s.areaPersonaler.ieTouch) {
+            if (typeof startMoving === 'undefined' && s.browser.ieTouch) {
                 if (s.touches.currentX !== s.touches.startX || s.touches.currentY !== s.touches.startY) {
                     startMoving = true;
                 }
@@ -10308,7 +10308,7 @@ ionic.views.Slider = ionic.views.View.inherit({
                 isTouched = false;
                 return;
             }
-            if (!startMoving && s.areaPersonaler.ieTouch) {
+            if (!startMoving && s.browser.ieTouch) {
                 return;
             }
             s.allowClick = false;
@@ -10936,7 +10936,7 @@ ionic.views.Slider = ionic.views.View.inherit({
                 //Crazy IE10 Matrix
                 else if (matrix.length === 16)
                     curTransform = parseFloat(matrix[12]);
-                //Normal areaPersonalers
+                //Normal Browsers
                 else
                     curTransform = parseFloat(matrix[4]);
             }
@@ -10947,7 +10947,7 @@ ionic.views.Slider = ionic.views.View.inherit({
                 //Crazy IE10 Matrix
                 else if (matrix.length === 16)
                     curTransform = parseFloat(matrix[13]);
-                //Normal areaPersonalers
+                //Normal Browsers
                 else
                     curTransform = parseFloat(matrix[5]);
             }
@@ -11399,7 +11399,7 @@ ionic.views.Slider = ionic.views.View.inherit({
                     }
 
                     //Set correct perspective for IE10
-                    if (s.areaPersonaler.ie) {
+                    if (s.browser.ie) {
                         var ws = s.wrapper[0].style;
                         ws.perspectiveOrigin = center + 'px 50%';
                     }
@@ -12439,9 +12439,9 @@ ionic.views.Slider = ionic.views.View.inherit({
             return Object.prototype.toString.apply(arr) === '[object Array]';
         },
         /*==================================================
-        areaPersonaler
+        Browser
         ====================================================*/
-        areaPersonaler: {
+        browser: {
             ie: window.navigator.pointerEnabled || window.navigator.msPointerEnabled,
             ieTouch: (window.navigator.msPointerEnabled && window.navigator.msMaxTouchPoints > 1) || (window.navigator.pointerEnabled && window.navigator.maxTouchPoints > 1)
         },
@@ -13583,7 +13583,7 @@ var manualUppercase = function(s) {
 };
 
 
-// String#toLowerCase and String#toUpperCase don't produce correct results in areaPersonalers with Turkish
+// String#toLowerCase and String#toUpperCase don't produce correct results in browsers with Turkish
 // locale, for this reason we need to detect this case and redefine lowercase/uppercase methods
 // with correct but slower alternatives. See https://github.com/angular/angular.js/issues/11387
 if ('i' !== 'I'.toLowerCase()) {
@@ -15001,8 +15001,8 @@ function angularInit(element, bootstrap) {
  *
  * For more information, see the {@link guide/bootstrap Bootstrap guide}.
  *
- * Angular will detect if it has been loaded into the areaPersonaler more than once and only allow the
- * first loaded script to be bootstrapped and will report a warning to the areaPersonaler console for
+ * Angular will detect if it has been loaded into the browser more than once and only allow the
+ * first loaded script to be bootstrapped and will report a warning to the browser console for
  * each of the subsequent scripts. This prevents strange results in applications, where otherwise
  * multiple instances of Angular try to work on the DOM.
  *
@@ -15765,7 +15765,7 @@ function toDebugString(obj) {
   $$CoreAnimateQueueProvider,
   $$AnimateRunnerFactoryProvider,
   $$AnimateAsyncRunFactoryProvider,
-  $areaPersonalerProvider,
+  $BrowserProvider,
   $CacheFactoryProvider,
   $ControllerProvider,
   $DateProvider,
@@ -15928,7 +15928,7 @@ function publishExternalAPI(angular) {
         $$animateQueue: $$CoreAnimateQueueProvider,
         $$AnimateRunner: $$AnimateRunnerFactoryProvider,
         $$animateAsyncRun: $$AnimateAsyncRunFactoryProvider,
-        $areaPersonaler: $areaPersonalerProvider,
+        $browser: $BrowserProvider,
         $cacheFactory: $CacheFactoryProvider,
         $controller: $ControllerProvider,
         $document: $DocumentProvider,
@@ -16001,7 +16001,7 @@ function publishExternalAPI(angular) {
  * delegates to Angular's built-in subset of jQuery, called "jQuery lite" or **jqLite**.
  *
  * jqLite is a tiny, API-compatible subset of jQuery that allows
- * Angular to manipulate the DOM in a cross-areaPersonaler compatible way. jqLite implements only the most
+ * Angular to manipulate the DOM in a cross-browser compatible way. jqLite implements only the most
  * commonly needed functionality with the goal of having a very small footprint.
  *
  * To use `jQuery`, simply ensure it is loaded before the `angular.js` file. You can also use the
@@ -16506,7 +16506,7 @@ var JQLitePrototype = JQLite.prototype = {
     if (document.readyState === 'complete') {
       setTimeout(trigger);
     } else {
-      this.on('DOMContentLoaded', trigger); // works for modern areaPersonalers and IE9
+      this.on('DOMContentLoaded', trigger); // works for modern browsers and IE9
       // we can not use jqLite since we are not done loading and jQuery could be loaded later.
       // jshint -W064
       JQLite(window).on('load', trigger); // fallback to window.onload for others
@@ -16798,7 +16798,7 @@ function specialMouseHandlerWrapper(target, event, handler) {
   // http://www.quirksmode.org/js/events_mouse.html#link8
   var related = event.relatedTarget;
   // For mousenter/leave call the handler if related is outside the target.
-  // NB: No relatedTarget if the mouse left/entered the areaPersonaler window
+  // NB: No relatedTarget if the mouse left/entered the browser window
   if (!related || (related !== target && !jqLiteContains.call(target, related))) {
     handler.call(target, event);
   }
@@ -18071,7 +18071,7 @@ function $AnchorScrollProvider() {
    * When called, it scrolls to the element related to the specified `hash` or (if omitted) to the
    * current value of {@link ng.$location#hash $location.hash()}, according to the rules specified
    * in the
-   * [HTML5 spec](http://www.w3.org/html/wg/drafts/html/master/areaPersonalers.html#the-indicated-part-of-the-document).
+   * [HTML5 spec](http://www.w3.org/html/wg/drafts/html/master/browsers.html#the-indicated-part-of-the-document).
    *
    * It also watches the {@link ng.$location#hash $location.hash()} and automatically scrolls to
    * match any anchor whenever it changes. This can be disabled by calling
@@ -18205,7 +18205,7 @@ function $AnchorScrollProvider() {
 
     // Helper function to get first anchor from a NodeList
     // (using `Array#some()` instead of `angular#forEach()` since it's more performant
-    //  and working in all supported areaPersonalers.)
+    //  and working in all supported browsers.)
     function getFirstAnchor(list) {
       var result = null;
       Array.prototype.some.call(list, function(element) {
@@ -18284,7 +18284,7 @@ function $AnchorScrollProvider() {
     }
 
     // does not scroll when user clicks on anchor link that is currently on
-    // (no url change, no $location.hash() change), areaPersonaler native does scroll
+    // (no url change, no $location.hash() change), browser native does scroll
     if (autoScrollingEnabled) {
       $rootScope.$watch(function autoScrollWatch() {return $location.hash();},
         function autoScrollWatchAction(newVal, oldVal) {
@@ -19155,17 +19155,17 @@ var $CoreAnimateCssProvider = function() {
 /**
  * ! This is a private undocumented service !
  *
- * @name $areaPersonaler
+ * @name $browser
  * @requires $log
  * @description
  * This object has two goals:
  *
- * - hide all the global state in the areaPersonaler caused by the window object
- * - abstract away all the areaPersonaler specific features and inconsistencies
+ * - hide all the global state in the browser caused by the window object
+ * - abstract away all the browser specific features and inconsistencies
  *
- * For tests we provide {@link ngMock.$areaPersonaler mock implementation} of the `$areaPersonaler`
+ * For tests we provide {@link ngMock.$browser mock implementation} of the `$browser`
  * service, which can be used for convenient testing of the application without the interaction with
- * the real areaPersonaler apis.
+ * the real browser apis.
  */
 /**
  * @param {object} window The global window object.
@@ -19173,7 +19173,7 @@ var $CoreAnimateCssProvider = function() {
  * @param {object} $log window.console or an object with the same interface.
  * @param {object} $sniffer $sniffer service
  */
-function areaPersonaler(window, document, $log, $sniffer) {
+function Browser(window, document, $log, $sniffer) {
   var self = this,
       location = window.location,
       history = window.history,
@@ -19235,7 +19235,7 @@ function areaPersonaler(window, document, $log, $sniffer) {
   //////////////////////////////////////////////////////////////
 
   var cachedState, lastHistoryState,
-      lastareaPersonalerUrl = location.href,
+      lastBrowserUrl = location.href,
       baseElement = document.find('base'),
       pendingLocation = null,
       getCurrentState = !$sniffer.history ? noop : function getCurrentState() {
@@ -19250,7 +19250,7 @@ function areaPersonaler(window, document, $log, $sniffer) {
   lastHistoryState = cachedState;
 
   /**
-   * @name $areaPersonaler#url
+   * @name $browser#url
    *
    * @description
    * GETTER:
@@ -19270,14 +19270,14 @@ function areaPersonaler(window, document, $log, $sniffer) {
    * @param {object=} state object to use with pushState/replaceState
    */
   self.url = function(url, replace, state) {
-    // In modern areaPersonalers `history.state` is `null` by default; treating it separately
-    // from `undefined` would cause `$areaPersonaler.url('/foo')` to change `history.state`
+    // In modern browsers `history.state` is `null` by default; treating it separately
+    // from `undefined` would cause `$browser.url('/foo')` to change `history.state`
     // to undefined via `pushState`. Instead, let's change `undefined` to `null` here.
     if (isUndefined(state)) {
       state = null;
     }
 
-    // Android areaPersonaler BFCache causes location, history reference to become stale.
+    // Android Browser BFCache causes location, history reference to become stale.
     if (location !== window.location) location = window.location;
     if (history !== window.history) history = window.history;
 
@@ -19288,11 +19288,11 @@ function areaPersonaler(window, document, $log, $sniffer) {
       // Don't change anything if previous and current URLs and states match. This also prevents
       // IE<10 from getting into redirect loop when in LocationHashbangInHtml5Url mode.
       // See https://github.com/angular/angular.js/commit/ffb2701
-      if (lastareaPersonalerUrl === url && (!$sniffer.history || sameState)) {
+      if (lastBrowserUrl === url && (!$sniffer.history || sameState)) {
         return self;
       }
-      var sameBase = lastareaPersonalerUrl && stripHash(lastareaPersonalerUrl) === stripHash(url);
-      lastareaPersonalerUrl = url;
+      var sameBase = lastBrowserUrl && stripHash(lastBrowserUrl) === stripHash(url);
+      lastBrowserUrl = url;
       lastHistoryState = state;
       // Don't use history API if only the hash changed
       // due to a bug in IE10/IE11 which leads
@@ -19321,7 +19321,7 @@ function areaPersonaler(window, document, $log, $sniffer) {
       return self;
     // getter
     } else {
-      // - pendingLocation is needed as areaPersonalers don't allow to read out
+      // - pendingLocation is needed as browsers don't allow to read out
       //   the new location.href if a reload happened or if there is a bug like in iOS 9 (see
       //   https://openradar.appspot.com/22186109).
       // - the replacement is a workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=407172
@@ -19330,7 +19330,7 @@ function areaPersonaler(window, document, $log, $sniffer) {
   };
 
   /**
-   * @name $areaPersonaler#state
+   * @name $browser#state
    *
    * @description
    * This method is a getter.
@@ -19355,7 +19355,7 @@ function areaPersonaler(window, document, $log, $sniffer) {
   // This variable should be used *only* inside the cacheState function.
   var lastCachedState = null;
   function cacheState() {
-    // This should be the only place in $areaPersonaler where `history.state` is read.
+    // This should be the only place in $browser where `history.state` is read.
     cachedState = getCurrentState();
     cachedState = isUndefined(cachedState) ? null : cachedState;
 
@@ -19367,11 +19367,11 @@ function areaPersonaler(window, document, $log, $sniffer) {
   }
 
   function fireUrlChange() {
-    if (lastareaPersonalerUrl === self.url() && lastHistoryState === cachedState) {
+    if (lastBrowserUrl === self.url() && lastHistoryState === cachedState) {
       return;
     }
 
-    lastareaPersonalerUrl = self.url();
+    lastBrowserUrl = self.url();
     lastHistoryState = cachedState;
     forEach(urlChangeListeners, function(listener) {
       listener(self.url(), cachedState);
@@ -19379,7 +19379,7 @@ function areaPersonaler(window, document, $log, $sniffer) {
   }
 
   /**
-   * @name $areaPersonaler#onUrlChange
+   * @name $browser#onUrlChange
    *
    * @description
    * Register callback function that will be called, when url changes.
@@ -19389,7 +19389,7 @@ function areaPersonaler(window, document, $log, $sniffer) {
    * - user clicks on history (forward/back) button
    * - user clicks on a link
    *
-   * It's not called when url is changed by $areaPersonaler.url() method
+   * It's not called when url is changed by $browser.url() method
    *
    * The listener gets called with new url as parameter.
    *
@@ -19402,7 +19402,7 @@ function areaPersonaler(window, document, $log, $sniffer) {
   self.onUrlChange = function(callback) {
     // TODO(vojta): refactor to use node's syntax for events
     if (!urlChangeInit) {
-      // We listen on both (hashchange/popstate) when available, as some areaPersonalers (e.g. Opera)
+      // We listen on both (hashchange/popstate) when available, as some browsers (e.g. Opera)
       // don't fire popstate when user change the address bar and don't fire hashchange when url
       // changed by push/replaceState
 
@@ -19440,7 +19440,7 @@ function areaPersonaler(window, document, $log, $sniffer) {
   //////////////////////////////////////////////////////////////
 
   /**
-   * @name $areaPersonaler#baseHref
+   * @name $browser#baseHref
    *
    * @description
    * Returns current <base href>
@@ -19454,17 +19454,17 @@ function areaPersonaler(window, document, $log, $sniffer) {
   };
 
   /**
-   * @name $areaPersonaler#defer
+   * @name $browser#defer
    * @param {function()} fn A function, who's execution should be deferred.
    * @param {number=} [delay=0] of milliseconds to defer the function execution.
-   * @returns {*} DeferId that can be used to cancel the task via `$areaPersonaler.defer.cancel()`.
+   * @returns {*} DeferId that can be used to cancel the task via `$browser.defer.cancel()`.
    *
    * @description
    * Executes a fn asynchronously via `setTimeout(fn, delay)`.
    *
    * Unlike when calling `setTimeout` directly, in test this function is mocked and instead of using
    * `setTimeout` in tests, the fns are queued in an array, which can be programmatically flushed
-   * via `$areaPersonaler.defer.flush()`.
+   * via `$browser.defer.flush()`.
    *
    */
   self.defer = function(fn, delay) {
@@ -19480,12 +19480,12 @@ function areaPersonaler(window, document, $log, $sniffer) {
 
 
   /**
-   * @name $areaPersonaler#defer.cancel
+   * @name $browser#defer.cancel
    *
    * @description
    * Cancels a deferred task identified with `deferId`.
    *
-   * @param {*} deferId Token returned by the `$areaPersonaler.defer` function.
+   * @param {*} deferId Token returned by the `$browser.defer` function.
    * @returns {boolean} Returns `true` if the task hasn't executed yet and was successfully
    *                    canceled.
    */
@@ -19501,10 +19501,10 @@ function areaPersonaler(window, document, $log, $sniffer) {
 
 }
 
-function $areaPersonalerProvider() {
+function $BrowserProvider() {
   this.$get = ['$window', '$log', '$sniffer', '$document',
       function($window, $log, $sniffer, $document) {
-        return new areaPersonaler($window, $document, $log, $sniffer);
+        return new Browser($window, $document, $log, $sniffer);
       }];
 }
 
@@ -23441,7 +23441,7 @@ function $ControllerProvider() {
  * @requires $window
  *
  * @description
- * A {@link angular.element jQuery or jqLite} wrapper for the areaPersonaler's `window.document` object.
+ * A {@link angular.element jQuery or jqLite} wrapper for the browser's `window.document` object.
  *
  * @example
    <example module="documentExample">
@@ -23474,7 +23474,7 @@ function $DocumentProvider() {
  * @description
  * Any uncaught exception in angular expressions is delegated to this service.
  * The default implementation simply delegates to `$log.error` which logs it into
- * the areaPersonaler console.
+ * the browser console.
  *
  * In unit tests, if `angular-mocks.js` is loaded, this service is overridden by
  * {@link ngMock.$exceptionHandler mock $exceptionHandler} which aids in testing.
@@ -23517,7 +23517,7 @@ function $ExceptionHandlerProvider() {
 var $$ForceReflowProvider = function() {
   this.$get = ['$document', function($document) {
     return function(domNode) {
-      //the line below will force the areaPersonaler to perform a repaint so
+      //the line below will force the browser to perform a repaint so
       //that all the animated elements within the animation frame will
       //be properly updated and drawn on screen. This is required to
       //ensure that the preparation animation is properly flushed so that
@@ -23946,7 +23946,7 @@ function $HttpProvider() {
      *
      * @description
      * The `$http` service is a core Angular service that facilitates communication with the remote
-     * HTTP servers via the areaPersonaler's [XMLHttpRequest](https://developer.mozilla.org/en/xmlhttprequest)
+     * HTTP servers via the browser's [XMLHttpRequest](https://developer.mozilla.org/en/xmlhttprequest)
      * object or via [JSONP](http://en.wikipedia.org/wiki/JSONP).
      *
      * For unit testing applications that use `$http` service, see
@@ -24905,7 +24905,7 @@ function $xhrFactoryProvider() {
  *
  * @description
  * HTTP backend used by the {@link ng.$http service} that delegates to
- * XMLHttpRequest object or JSONP and deals with areaPersonaler incompatibilities.
+ * XMLHttpRequest object or JSONP and deals with browser incompatibilities.
  *
  * You should never need to use this service directly, instead use the higher-level abstractions:
  * {@link ng.$http $http} or {@link ngResource.$resource $resource}.
@@ -24914,16 +24914,16 @@ function $xhrFactoryProvider() {
  * $httpBackend} which can be trained with responses.
  */
 function $HttpBackendProvider() {
-  this.$get = ['$areaPersonaler', '$window', '$document', '$xhrFactory', function($areaPersonaler, $window, $document, $xhrFactory) {
-    return createHttpBackend($areaPersonaler, $xhrFactory, $areaPersonaler.defer, $window.angular.callbacks, $document[0]);
+  this.$get = ['$browser', '$window', '$document', '$xhrFactory', function($browser, $window, $document, $xhrFactory) {
+    return createHttpBackend($browser, $xhrFactory, $browser.defer, $window.angular.callbacks, $document[0]);
   }];
 }
 
-function createHttpBackend($areaPersonaler, createXhr, $areaPersonalerDefer, callbacks, rawDocument) {
+function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDocument) {
   // TODO(vojta): fix the signature
   return function(method, url, post, callback, headers, timeout, withCredentials, responseType) {
-    $areaPersonaler.$$incOutstandingRequestCount();
-    url = url || $areaPersonaler.url();
+    $browser.$$incOutstandingRequestCount();
+    url = url || $browser.url();
 
     if (lowercase(method) == 'jsonp') {
       var callbackId = '_' + (callbacks.counter++).toString(36);
@@ -24959,7 +24959,7 @@ function createHttpBackend($areaPersonaler, createXhr, $areaPersonalerDefer, cal
         var status = xhr.status === 1223 ? 204 : xhr.status;
 
         // fix status code when it is 0 (0 status is undocumented).
-        // Occurs when accessing file resources or on Android 4.1 stock areaPersonaler
+        // Occurs when accessing file resources or on Android 4.1 stock browser
         // while retrieving files from application cache.
         if (status === 0) {
           status = response ? 200 : urlResolve(url).protocol == 'file' ? 404 : 0;
@@ -24992,7 +24992,7 @@ function createHttpBackend($areaPersonaler, createXhr, $areaPersonalerDefer, cal
           // WebKit added support for the json responseType value on 09/03/2013
           // https://bugs.webkit.org/show_bug.cgi?id=73648. Versions of Safari prior to 7 are
           // known to throw when setting the value "json" as the response type. Other older
-          // areaPersonalers implementing the responseType
+          // browsers implementing the responseType
           //
           // The json response type can be ignored if not supported, because JSON payloads are
           // parsed on the client-side regardless.
@@ -25006,7 +25006,7 @@ function createHttpBackend($areaPersonaler, createXhr, $areaPersonalerDefer, cal
     }
 
     if (timeout > 0) {
-      var timeoutId = $areaPersonalerDefer(timeoutRequest, timeout);
+      var timeoutId = $browserDefer(timeoutRequest, timeout);
     } else if (isPromiseLike(timeout)) {
       timeout.then(timeoutRequest);
     }
@@ -25020,12 +25020,12 @@ function createHttpBackend($areaPersonaler, createXhr, $areaPersonalerDefer, cal
     function completeRequest(callback, status, response, headersString, statusText) {
       // cancel timeout and subsequent timeout promise resolution
       if (isDefined(timeoutId)) {
-        $areaPersonalerDefer.cancel(timeoutId);
+        $browserDefer.cancel(timeoutId);
       }
       jsonpDone = xhr = null;
 
       callback(status, response, headersString, statusText);
-      $areaPersonaler.$$completeOutstandingRequest(noop);
+      $browser.$$completeOutstandingRequest(noop);
     }
   };
 
@@ -25447,8 +25447,8 @@ function $InterpolateProvider() {
 }
 
 function $IntervalProvider() {
-  this.$get = ['$rootScope', '$window', '$q', '$$q', '$areaPersonaler',
-       function($rootScope,   $window,   $q,   $$q,   $areaPersonaler) {
+  this.$get = ['$rootScope', '$window', '$q', '$$q', '$browser',
+       function($rootScope,   $window,   $q,   $$q,   $browser) {
     var intervals = {};
 
 
@@ -25591,7 +25591,7 @@ function $IntervalProvider() {
 
       promise.$$intervalId = setInterval(function tick() {
         if (skipApply) {
-          $areaPersonaler.defer(callback);
+          $browser.defer(callback);
         } else {
           $rootScope.$evalAsync(callback);
         }
@@ -25820,7 +25820,7 @@ function LocationHtml5Url(appBase, appBaseNoFile, basePrefix) {
 /**
  * LocationHashbangUrl represents url
  * This object is exposed as $location service when developer doesn't opt into html5 mode.
- * It also serves as the base class for html5 mode fallback on legacy areaPersonalers.
+ * It also serves as the base class for html5 mode fallback on legacy browsers.
  *
  * @constructor
  * @param {string} appBase application base URL
@@ -25874,7 +25874,7 @@ function LocationHashbangUrl(appBase, appBaseNoFile, hashPrefix) {
 
     /*
      * In Windows, on an anchor node on documents loaded from
-     * the filesystem, the areaPersonaler will return a pathname
+     * the filesystem, the browser will return a pathname
      * prefixed with the drive name ('/C:/path') when a
      * pathname without a drive is set:
      *  * a.setAttribute('href', '/foo')
@@ -25931,7 +25931,7 @@ function LocationHashbangUrl(appBase, appBaseNoFile, hashPrefix) {
 
 /**
  * LocationHashbangUrl represents url
- * This object is exposed as $location service when html5 history api is enabled but the areaPersonaler
+ * This object is exposed as $location service when html5 history api is enabled but the browser
  * does not support it.
  *
  * @constructor
@@ -26277,9 +26277,9 @@ forEach([LocationHashbangInHtml5Url, LocationHashbangUrl, LocationHtml5Url], fun
    * Change the history state object when called with one parameter and return `$location`.
    * The state object is later passed to `pushState` or `replaceState`.
    *
-   * NOTE: This method is supported only in HTML5 mode and only in areaPersonalers supporting
+   * NOTE: This method is supported only in HTML5 mode and only in browsers supporting
    * the HTML5 History API (i.e. methods `pushState` and `replaceState`). If you need to support
-   * older areaPersonalers (like IE9 or Android < 4.0), don't use this method.
+   * older browsers (like IE9 or Android < 4.0), don't use this method.
    *
    * @param {object=} state State object for pushState or replaceState
    * @return {object} state
@@ -26291,10 +26291,10 @@ forEach([LocationHashbangInHtml5Url, LocationHashbangUrl, LocationHtml5Url], fun
 
     if (Location !== LocationHtml5Url || !this.$$html5) {
       throw $locationMinErr('nostate', 'History API state support is available only ' +
-        'in HTML5 mode and only in areaPersonalers supporting HTML5 History API');
+        'in HTML5 mode and only in browsers supporting HTML5 History API');
     }
     // The user might modify `stateObject` after invoking `$location.state(stateObject)`
-    // but we're changing the $$state reference to $areaPersonaler.state() during the $digest
+    // but we're changing the $$state reference to $browser.state() during the $digest
     // so the modification window is narrow.
     this.$$state = isUndefined(state) ? null : state;
 
@@ -26331,17 +26331,17 @@ function locationGetterSetter(property, preprocess) {
  * @requires $rootElement
  *
  * @description
- * The $location service parses the URL in the areaPersonaler address bar (based on the
+ * The $location service parses the URL in the browser address bar (based on the
  * [window.location](https://developer.mozilla.org/en/window.location)) and makes the URL
  * available to your application. Changes to the URL in the address bar are reflected into
- * $location service and changes to $location are reflected into the areaPersonaler address bar.
+ * $location service and changes to $location are reflected into the browser address bar.
  *
  * **The $location service:**
  *
- * - Exposes the current URL in the areaPersonaler address bar, so you can
+ * - Exposes the current URL in the browser address bar, so you can
  *   - Watch and observe the URL.
  *   - Change the URL.
- * - Synchronizes the URL with the areaPersonaler when the user
+ * - Synchronizes the URL with the browser when the user
  *   - Changes the address bar.
  *   - Clicks the back or forward button (or clicks a History link).
  *   - Clicks on a link.
@@ -26388,7 +26388,7 @@ function $LocationProvider() {
    *   If object, sets `enabled`, `requireBase` and `rewriteLinks` to respective values. Supported
    *   properties:
    *   - **enabled** – `{boolean}` – (default: false) If true, will rely on `history.pushState` to
-   *     change urls where supported. Will fall back to hash-prefixed paths in areaPersonalers that do not
+   *     change urls where supported. Will fall back to hash-prefixed paths in browsers that do not
    *     support `pushState`.
    *   - **requireBase** - `{boolean}` - (default: `true`) When html5Mode is enabled, specifies
    *     whether or not a <base> tag is required to be present. If `enabled` and `requireBase` are
@@ -26436,7 +26436,7 @@ function $LocationProvider() {
    * {@link ng.$location#$locationChangeSuccess $locationChangeSuccess} is fired.
    *
    * The `newState` and `oldState` parameters may be defined only in HTML5 mode and when
-   * the areaPersonaler supports the HTML5 History API.
+   * the browser supports the HTML5 History API.
    *
    * @param {Object} angularEvent Synthetic event object.
    * @param {string} newUrl New URL
@@ -26453,7 +26453,7 @@ function $LocationProvider() {
    * Broadcasted after a URL was changed.
    *
    * The `newState` and `oldState` parameters may be defined only in HTML5 mode and when
-   * the areaPersonaler supports the HTML5 History API.
+   * the browser supports the HTML5 History API.
    *
    * @param {Object} angularEvent Synthetic event object.
    * @param {string} newUrl New URL
@@ -26462,12 +26462,12 @@ function $LocationProvider() {
    * @param {string=} oldState History state object that was before it was changed.
    */
 
-  this.$get = ['$rootScope', '$areaPersonaler', '$sniffer', '$rootElement', '$window',
-      function($rootScope, $areaPersonaler, $sniffer, $rootElement, $window) {
+  this.$get = ['$rootScope', '$browser', '$sniffer', '$rootElement', '$window',
+      function($rootScope, $browser, $sniffer, $rootElement, $window) {
     var $location,
         LocationMode,
-        baseHref = $areaPersonaler.baseHref(), // if base[href] is undefined, it defaults to ''
-        initialUrl = $areaPersonaler.url(),
+        baseHref = $browser.baseHref(), // if base[href] is undefined, it defaults to ''
+        initialUrl = $browser.url(),
         appBase;
 
     if (html5Mode.enabled) {
@@ -26486,20 +26486,20 @@ function $LocationProvider() {
     $location = new LocationMode(appBase, appBaseNoFile, '#' + hashPrefix);
     $location.$$parseLinkUrl(initialUrl, initialUrl);
 
-    $location.$$state = $areaPersonaler.state();
+    $location.$$state = $browser.state();
 
     var IGNORE_URI_REGEXP = /^\s*(javascript|mailto):/i;
 
-    function setareaPersonalerUrlWithFallback(url, replace, state) {
+    function setBrowserUrlWithFallback(url, replace, state) {
       var oldUrl = $location.url();
       var oldState = $location.$$state;
       try {
-        $areaPersonaler.url(url, replace, state);
+        $browser.url(url, replace, state);
 
         // Make sure $location.state() returns referentially identical (not just deeply equal)
         // state object; this makes possible quick checking if the state changed in the digest
         // loop. Checking deep equality would be too expensive.
-        $location.$$state = $areaPersonaler.state();
+        $location.$$state = $browser.state();
       } catch (e) {
         // Restore old values if pushState fails
         $location.url(oldUrl);
@@ -26510,7 +26510,7 @@ function $LocationProvider() {
     }
 
     $rootElement.on('click', function(event) {
-      // TODO(vojta): rewrite link when opening in new tab/window (in legacy areaPersonaler)
+      // TODO(vojta): rewrite link when opening in new tab/window (in legacy browser)
       // currently we open nice url link and redirect then
 
       if (!html5Mode.rewriteLinks || event.ctrlKey || event.metaKey || event.shiftKey || event.which == 2 || event.button == 2) return;
@@ -26544,7 +26544,7 @@ function $LocationProvider() {
           // getting double entries in the location history.
           event.preventDefault();
           // update location manually
-          if ($location.absUrl() != $areaPersonaler.url()) {
+          if ($location.absUrl() != $browser.url()) {
             $rootScope.$apply();
             // hack to work around FF6 bug 684208 when scenario runner clicks on links
             $window.angular['ff-684208-preventDefault'] = true;
@@ -26556,13 +26556,13 @@ function $LocationProvider() {
 
     // rewrite hashbang url <> html5 url
     if (trimEmptyHash($location.absUrl()) != trimEmptyHash(initialUrl)) {
-      $areaPersonaler.url($location.absUrl(), true);
+      $browser.url($location.absUrl(), true);
     }
 
     var initializing = true;
 
-    // update $location when $areaPersonaler url changes
-    $areaPersonaler.onUrlChange(function(newUrl, newState) {
+    // update $location when $browser url changes
+    $browser.onUrlChange(function(newUrl, newState) {
 
       if (isUndefined(beginsWith(appBaseNoFile, newUrl))) {
         // If we are navigating outside of the app then force a reload
@@ -26588,7 +26588,7 @@ function $LocationProvider() {
         if (defaultPrevented) {
           $location.$$parse(oldUrl);
           $location.$$state = oldState;
-          setareaPersonalerUrlWithFallback(oldUrl, false, oldState);
+          setBrowserUrlWithFallback(oldUrl, false, oldState);
         } else {
           initializing = false;
           afterLocationChange(oldUrl, oldState);
@@ -26597,11 +26597,11 @@ function $LocationProvider() {
       if (!$rootScope.$$phase) $rootScope.$digest();
     });
 
-    // update areaPersonaler
+    // update browser
     $rootScope.$watch(function $locationWatch() {
-      var oldUrl = trimEmptyHash($areaPersonaler.url());
+      var oldUrl = trimEmptyHash($browser.url());
       var newUrl = trimEmptyHash($location.absUrl());
-      var oldState = $areaPersonaler.state();
+      var oldState = $browser.state();
       var currentReplace = $location.$$replace;
       var urlOrStateChanged = oldUrl !== newUrl ||
         ($location.$$html5 && $sniffer.history && oldState !== $location.$$state);
@@ -26623,7 +26623,7 @@ function $LocationProvider() {
             $location.$$state = oldState;
           } else {
             if (urlOrStateChanged) {
-              setareaPersonalerUrlWithFallback(newUrl, currentReplace,
+              setBrowserUrlWithFallback(newUrl, currentReplace,
                                         oldState === $location.$$state ? null : $location.$$state);
             }
             afterLocationChange(oldUrl, oldState);
@@ -26653,7 +26653,7 @@ function $LocationProvider() {
  *
  * @description
  * Simple service for logging. Default implementation safely writes the message
- * into the areaPersonaler's console (if present).
+ * into the browser's console (if present).
  *
  * The main purpose of this service is to simplify debugging and troubleshooting.
  *
@@ -26834,7 +26834,7 @@ var $parseMinErr = minErr('$parse');
 //
 // This sandboxing technique is not perfect and doesn't aim to be. The goal is to prevent exploits
 // against the expression language, but not to prevent exploits that were enabled by exposing
-// sensitive JavaScript or areaPersonaler APIs on Scope. Exposing such objects on a Scope is never a good
+// sensitive JavaScript or browser APIs on Scope. Exposing such objects on a Scope is never a good
 // practice and therefore we are not even trying to protect against interaction with an object
 // explicitly exposed in this way.
 //
@@ -28999,7 +28999,7 @@ function $ParseProvider() {
  *
  * - $q is integrated with the {@link ng.$rootScope.Scope} Scope model observation
  *   mechanism in angular, which means faster propagation of resolution or rejection into your
- *   models and avoiding unnecessary areaPersonaler repaints, which would result in flickering UI.
+ *   models and avoiding unnecessary browser repaints, which would result in flickering UI.
  * - Q has many more features than $q, but that comes at a cost of bytes. $q is tiny, but contains
  *   all the important functionality needed for common async tasks.
  *
@@ -29043,9 +29043,9 @@ function $QProvider() {
 }
 
 function $$QProvider() {
-  this.$get = ['$areaPersonaler', '$exceptionHandler', function($areaPersonaler, $exceptionHandler) {
+  this.$get = ['$browser', '$exceptionHandler', function($browser, $exceptionHandler) {
     return qFactory(function(callback) {
-      $areaPersonaler.defer(callback);
+      $browser.defer(callback);
     }, $exceptionHandler);
   }];
 }
@@ -29535,8 +29535,8 @@ function $RootScopeProvider() {
     return ChildScope;
   }
 
-  this.$get = ['$exceptionHandler', '$parse', '$areaPersonaler',
-      function($exceptionHandler, $parse, $areaPersonaler) {
+  this.$get = ['$exceptionHandler', '$parse', '$browser',
+      function($exceptionHandler, $parse, $browser) {
 
     function destroyChildScope($event) {
         $event.currentScope.$$destroyed = true;
@@ -30194,13 +30194,13 @@ function $RootScopeProvider() {
             logIdx, asyncTask;
 
         beginPhase('$digest');
-        // Check for changes to areaPersonaler url that happened in sync before the call to $digest
-        $areaPersonaler.$$checkUrlChange();
+        // Check for changes to browser url that happened in sync before the call to $digest
+        $browser.$$checkUrlChange();
 
         if (this === $rootScope && applyAsyncId !== null) {
           // If this is the root scope, and $applyAsync has scheduled a deferred $apply(), then
           // cancel the scheduled $apply and flush the queue of expressions to be evaluated.
-          $areaPersonaler.defer.cancel(applyAsyncId);
+          $browser.defer.cancel(applyAsyncId);
           flushApplyAsync();
         }
 
@@ -30343,7 +30343,7 @@ function $RootScopeProvider() {
 
         if (this === $rootScope) {
           //Remove handlers attached to window when $rootScope is removed
-          $areaPersonaler.$$applicationDestroyed();
+          $browser.$$applicationDestroyed();
         }
 
         incrementWatchersCount(this, -this.$$watchersCount);
@@ -30434,7 +30434,7 @@ function $RootScopeProvider() {
         // if we are outside of an $digest loop and this is the first time we are scheduling async
         // task also schedule async auto-flush
         if (!$rootScope.$$phase && !asyncQueue.length) {
-          $areaPersonaler.defer(function() {
+          $browser.defer(function() {
             if (asyncQueue.length) {
               $rootScope.$digest();
             }
@@ -30455,7 +30455,7 @@ function $RootScopeProvider() {
        *
        * @description
        * `$apply()` is used to execute an expression in angular from outside of the angular
-       * framework. (For example from areaPersonaler DOM events, setTimeout, XHR or third party libraries).
+       * framework. (For example from browser DOM events, setTimeout, XHR or third party libraries).
        * Because we are calling into the angular framework we need to perform proper scope life
        * cycle of {@link ng.$exceptionHandler exception handling},
        * {@link ng.$rootScope.Scope#$digest executing watches}.
@@ -30520,7 +30520,7 @@ function $RootScopeProvider() {
        *
        * @description
        * Schedule the invocation of $apply to occur at a later time. The actual time difference
-       * varies across areaPersonalers, but is typically around ~10 milliseconds.
+       * varies across browsers, but is typically around ~10 milliseconds.
        *
        * This can be used to queue up multiple expressions which need to be evaluated in the same
        * digest.
@@ -30800,7 +30800,7 @@ function $RootScopeProvider() {
 
     function scheduleApplyAsync() {
       if (applyAsyncId === null) {
-        applyAsyncId = $areaPersonaler.defer(function() {
+        applyAsyncId = $browser.defer(function() {
           $rootScope.$apply(flushApplyAsync);
         });
       }
@@ -31388,13 +31388,13 @@ function $SceDelegateProvider() {
  * them} or {@link ng.$sce#trustAsResourceUrl wrap it} into a trusted value.
  *
  * *Please note*:
- * The areaPersonaler's
- * [Same Origin Policy](https://code.google.com/p/areaPersonalersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest)
+ * The browser's
+ * [Same Origin Policy](https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest)
  * and [Cross-Origin Resource Sharing (CORS)](http://www.w3.org/TR/cors/)
  * policy apply in addition to this and may further restrict whether the template is successfully
  * loaded.  This means that without the right CORS policy, loading templates from a different domain
- * won't work on all areaPersonalers.  Also, loading templates from `file://` URL does not work on some
- * areaPersonalers.
+ * won't work on all browsers.  Also, loading templates from `file://` URL does not work on some
+ * browsers.
  *
  * ## This feels like too much overhead
  *
@@ -31966,12 +31966,12 @@ function $SceProvider() {
  * @requires $window
  * @requires $document
  *
- * @property {boolean} history Does the areaPersonaler support html5 history api ?
- * @property {boolean} transitions Does the areaPersonaler support CSS transition events ?
- * @property {boolean} animations Does the areaPersonaler support CSS animation events ?
+ * @property {boolean} history Does the browser support html5 history api ?
+ * @property {boolean} transitions Does the browser support CSS transition events ?
+ * @property {boolean} animations Does the browser support CSS animation events ?
  *
  * @description
- * This is very simple implementation of testing areaPersonaler's features.
+ * This is very simple implementation of testing browser's features.
  */
 function $SnifferProvider() {
   this.$get = ['$window', '$document', function($window, $document) {
@@ -32020,7 +32020,7 @@ function $SnifferProvider() {
       // http://code.google.com/p/android/issues/detail?id=17471
       // https://github.com/angular/angular.js/issues/904
 
-      // older webkit areaPersonaler (533.9) on Boxee box has exactly the same problem as Android has
+      // older webkit browser (533.9) on Boxee box has exactly the same problem as Android has
       // so let's not use the history API also
       // We are purposefully using `!(android < 4)` to cover the case when `android` is undefined
       // jshint -W018
@@ -32160,8 +32160,8 @@ function $TemplateRequestProvider() {
 }
 
 function $$TestabilityProvider() {
-  this.$get = ['$rootScope', '$areaPersonaler', '$location',
-       function($rootScope,   $areaPersonaler,   $location) {
+  this.$get = ['$rootScope', '$browser', '$location',
+       function($rootScope,   $browser,   $location) {
 
     /**
      * @name $testability
@@ -32235,7 +32235,7 @@ function $$TestabilityProvider() {
      * @name $$testability#getLocation
      *
      * @description
-     * Shortcut for getting the location in a areaPersonaler agnostic way. Returns
+     * Shortcut for getting the location in a browser agnostic way. Returns
      *     the path, search, and hash. (e.g. /path?a=b#hash)
      */
     testability.getLocation = function() {
@@ -32267,7 +32267,7 @@ function $$TestabilityProvider() {
      * @param {function} callback
      */
     testability.whenStable = function(callback) {
-      $areaPersonaler.notifyWhenNoOutstandingRequests(callback);
+      $browser.notifyWhenNoOutstandingRequests(callback);
     };
 
     return testability;
@@ -32275,8 +32275,8 @@ function $$TestabilityProvider() {
 }
 
 function $TimeoutProvider() {
-  this.$get = ['$rootScope', '$areaPersonaler', '$q', '$$q', '$exceptionHandler',
-       function($rootScope,   $areaPersonaler,   $q,   $$q,   $exceptionHandler) {
+  this.$get = ['$rootScope', '$browser', '$q', '$$q', '$exceptionHandler',
+       function($rootScope,   $browser,   $q,   $$q,   $exceptionHandler) {
 
     var deferreds = {};
 
@@ -32323,7 +32323,7 @@ function $TimeoutProvider() {
           promise = deferred.promise,
           timeoutId;
 
-      timeoutId = $areaPersonaler.defer(function() {
+      timeoutId = $browser.defer(function() {
         try {
           deferred.resolve(fn.apply(null, args));
         } catch (e) {
@@ -32360,7 +32360,7 @@ function $TimeoutProvider() {
       if (promise && promise.$$timeoutId in deferreds) {
         deferreds[promise.$$timeoutId].reject('canceled');
         delete deferreds[promise.$$timeoutId];
-        return $areaPersonaler.defer.cancel(promise.$$timeoutId);
+        return $browser.defer.cancel(promise.$$timeoutId);
       }
       return false;
     };
@@ -32371,8 +32371,8 @@ function $TimeoutProvider() {
 
 // NOTE:  The usage of window and document instead of $window and $document here is
 // deliberate.  This service depends on the specific behavior of anchor nodes created by the
-// areaPersonaler (resolving and parsing URLs) that is unlikely to be provided by mock objects and
-// cause us to break tests.  In addition, when the areaPersonaler resolves a URL for XHR, it
+// browser (resolving and parsing URLs) that is unlikely to be provided by mock objects and
+// cause us to break tests.  In addition, when the browser resolves a URL for XHR, it
 // doesn't know about mocked locations and resolves URLs to the real document - which is
 // exactly the behavior needed here.  There is little value is mocking these out for this
 // service.
@@ -32382,7 +32382,7 @@ var originUrl = urlResolve(window.location.href);
 
 /**
  *
- * Implementation Notes for non-IE areaPersonalers
+ * Implementation Notes for non-IE browsers
  * ----------------------------------------
  * Assigning a URL to the href property of an anchor DOM node, even one attached to the DOM,
  * results both in the normalizing and parsing of the URL.  Normalizing means that a relative
@@ -32395,7 +32395,7 @@ var originUrl = urlResolve(window.location.href);
  * Implementation Notes for IE
  * ---------------------------
  * IE <= 10 normalizes the URL when assigned to the anchor node similar to the other
- * areaPersonalers.  However, the parsed components will not be set if the URL assigned did not specify
+ * browsers.  However, the parsed components will not be set if the URL assigned did not specify
  * them.  (e.g. if you assign a.href = "foo", then a.protocol, a.host, etc. will be empty.)  We
  * work around that by performing the parsing in a 2nd step by taking a previously normalized
  * URL (e.g. by assigning to a.href) and assigning it a.href again.  This correctly populates the
@@ -32470,7 +32470,7 @@ function urlIsSameOrigin(requestUrl) {
  * @name $window
  *
  * @description
- * A reference to the areaPersonaler's `window` object. While `window`
+ * A reference to the browser's `window` object. While `window`
  * is globally available in JavaScript, it causes testability problems, because
  * it is a global variable. In angular we always refer to it through the
  * `$window` service, so it may be overridden, removed or mocked for testing.
@@ -33025,7 +33025,7 @@ var ZERO_CHAR = '0';
          expect(element(by.id('currency-no-fractions')).getText()).toBe('USD$1,235');
        });
        it('should update', function() {
-         if (areaPersonaler.params.areaPersonaler == 'safari') {
+         if (browser.params.browser == 'safari') {
            // Safari does not understand the minus key. See
            // https://github.com/angular/protractor/issues/481
            return;
@@ -33524,7 +33524,7 @@ var DATE_FORMATS_SPLIT = /((?:[^yMLdHhmsaZEwG']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+
  * @param {string=} timezone Timezone to be used for formatting. It understands UTC/GMT and the
  *    continental US time zone abbreviations, but for general use, use a time zone offset, for
  *    example, `'+0430'` (4 hours, 30 minutes east of the Greenwich meridian)
- *    If not specified, the timezone of the areaPersonaler will be used.
+ *    If not specified, the timezone of the browser will be used.
  * @returns {string} Formatted string or the input if input is not recognized as date/millis.
  *
  * @example
@@ -34237,10 +34237,10 @@ var htmlAnchorDirective = valueFn({
           element(by.id('link-3')).click();
 
           // At this point, we navigate away from an Angular page, so we need
-          // to use areaPersonaler.driver to get the base webdriver.
+          // to use browser.driver to get the base webdriver.
 
-          areaPersonaler.wait(function() {
-            return areaPersonaler.driver.getCurrentUrl().then(function(url) {
+          browser.wait(function() {
+            return browser.driver.getCurrentUrl().then(function(url) {
               return url.match(/\/123$/);
             });
           }, 5000, 'page should navigate to /123');
@@ -34266,9 +34266,9 @@ var htmlAnchorDirective = valueFn({
           element(by.id('link-6')).click();
 
           // At this point, we navigate away from an Angular page, so we need
-          // to use areaPersonaler.driver to get the base webdriver.
-          areaPersonaler.wait(function() {
-            return areaPersonaler.driver.getCurrentUrl().then(function(url) {
+          // to use browser.driver to get the base webdriver.
+          browser.wait(function() {
+            return browser.driver.getCurrentUrl().then(function(url) {
               return url.match(/\/6$/);
             });
           }, 5000, 'page should navigate to /6');
@@ -34285,7 +34285,7 @@ var htmlAnchorDirective = valueFn({
  *
  * @description
  * Using Angular markup like `{{hash}}` in a `src` attribute doesn't
- * work right: The areaPersonaler will fetch from the URL with the literal
+ * work right: The browser will fetch from the URL with the literal
  * text `{{hash}}` until Angular replaces the expression inside
  * `{{hash}}`. The `ngSrc` directive solves this problem.
  *
@@ -34311,7 +34311,7 @@ var htmlAnchorDirective = valueFn({
  *
  * @description
  * Using Angular markup like `{{hash}}` in a `srcset` attribute doesn't
- * work right: The areaPersonaler will fetch from the URL with the literal
+ * work right: The browser will fetch from the URL with the literal
  * text `{{hash}}` until Angular replaces the expression inside
  * `{{hash}}`. The `ngSrcset` directive solves this problem.
  *
@@ -34937,7 +34937,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
  * # Alias: {@link ng.directive:ngForm `ngForm`}
  *
  * In Angular, forms can be nested. This means that the outer form is valid when all of the child
- * forms are valid as well. However, areaPersonalers do not allow nesting of `<form>` elements, so
+ * forms are valid as well. However, browsers do not allow nesting of `<form>` elements, so
  * Angular provides the {@link ng.directive:ngForm `ngForm`} directive, which behaves identically to
  * `form` but can be nested. Nested forms can be useful, for example, if the validity of a sub-group
  * of controls needs to be determined.
@@ -34956,7 +34956,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
  * # Submitting a form and preventing the default action
  *
  * Since the role of forms in client-side Angular applications is different than in classical
- * roundtrip apps, it is desirable for the areaPersonaler not to translate the form submission into a full
+ * roundtrip apps, it is desirable for the browser not to translate the form submission into a full
  * page reload that sends the data to the server. Instead some javascript logic should be triggered
  * to handle the form submission in an application-specific way.
  *
@@ -35161,7 +35161,7 @@ var ngFormDirective = formDirectiveFactory(true);
 // Regex code was initially obtained from SO prior to modification: https://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime#answer-3143231
 var ISO_DATE_REGEXP = /^\d{4,}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+(?:[+-][0-2]\d:[0-5]\d|Z)$/;
 // See valid URLs in RFC3987 (http://tools.ietf.org/html/rfc3987)
-// Note: We are being more lenient, because areaPersonalers are too.
+// Note: We are being more lenient, because browsers are too.
 //   1. Scheme
 //   2. Slashes
 //   3. Username
@@ -35290,17 +35290,17 @@ var inputType = {
      * @name input[date]
      *
      * @description
-     * Input with date validation and transformation. In areaPersonalers that do not yet support
+     * Input with date validation and transformation. In browsers that do not yet support
      * the HTML5 date input, a text element will be used. In that case, text must be entered in a valid ISO-8601
      * date format (yyyy-MM-dd), for example: `2009-01-06`. Since many
-     * modern areaPersonalers do not yet support this input type, it is important to provide cues to users on the
+     * modern browsers do not yet support this input type, it is important to provide cues to users on the
      * expected input format via a placeholder or label.
      *
      * The model must always be a Date object, otherwise Angular will throw an error.
      * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
      *
      * The timezone to be used to read/write the `Date` instance in the model can be defined using
-     * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the areaPersonaler.
+     * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
      *
      * @param {string} ngModel Assignable angular expression to data-bind to.
      * @param {string=} name Property name of the form under which the control is published.
@@ -35358,13 +35358,13 @@ var inputType = {
 
         // currently protractor/webdriver does not support
         // sending keys to all known HTML5 input controls
-        // for various areaPersonalers (see https://github.com/angular/protractor/issues/562).
+        // for various browsers (see https://github.com/angular/protractor/issues/562).
         function setInput(val) {
           // set the value of the element and force validation.
           var scr = "var ipt = document.getElementById('exampleInput'); " +
           "ipt.value = '" + val + "';" +
           "angular.element(ipt).scope().$apply(function(s) { s.myForm[ipt.name].$setViewValue('" + val + "'); });";
-          areaPersonaler.executeScript(scr);
+          browser.executeScript(scr);
         }
 
         it('should initialize to model', function() {
@@ -35395,7 +35395,7 @@ var inputType = {
     * @name input[datetime-local]
     *
     * @description
-    * Input with datetime validation and transformation. In areaPersonalers that do not yet support
+    * Input with datetime validation and transformation. In browsers that do not yet support
     * the HTML5 date input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
     * local datetime format (yyyy-MM-ddTHH:mm:ss), for example: `2010-12-28T14:57:00`.
     *
@@ -35403,7 +35403,7 @@ var inputType = {
     * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
     *
     * The timezone to be used to read/write the `Date` instance in the model can be defined using
-    * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the areaPersonaler.
+    * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
     *
     * @param {string} ngModel Assignable angular expression to data-bind to.
     * @param {string=} name Property name of the form under which the control is published.
@@ -35461,13 +35461,13 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various areaPersonalers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (https://github.com/angular/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
         "ipt.value = '" + val + "';" +
         "angular.element(ipt).scope().$apply(function(s) { s.myForm[ipt.name].$setViewValue('" + val + "'); });";
-        areaPersonaler.executeScript(scr);
+        browser.executeScript(scr);
       }
 
       it('should initialize to model', function() {
@@ -35498,7 +35498,7 @@ var inputType = {
    * @name input[time]
    *
    * @description
-   * Input with time validation and transformation. In areaPersonalers that do not yet support
+   * Input with time validation and transformation. In browsers that do not yet support
    * the HTML5 time input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
    * local time format (HH:mm:ss), for example: `14:57:00`. Model must be a Date object. This binding will always output a
    * Date object to the model of January 1, 1970, or local date `new Date(1970, 0, 1, HH, mm, ss)`.
@@ -35507,7 +35507,7 @@ var inputType = {
    * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
    *
    * The timezone to be used to read/write the `Date` instance in the model can be defined using
-   * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the areaPersonaler.
+   * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
    *
    * @param {string} ngModel Assignable angular expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
@@ -35565,13 +35565,13 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various areaPersonalers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (https://github.com/angular/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
         "ipt.value = '" + val + "';" +
         "angular.element(ipt).scope().$apply(function(s) { s.myForm[ipt.name].$setViewValue('" + val + "'); });";
-        areaPersonaler.executeScript(scr);
+        browser.executeScript(scr);
       }
 
       it('should initialize to model', function() {
@@ -35602,7 +35602,7 @@ var inputType = {
     * @name input[week]
     *
     * @description
-    * Input with week-of-the-year validation and transformation to Date. In areaPersonalers that do not yet support
+    * Input with week-of-the-year validation and transformation to Date. In browsers that do not yet support
     * the HTML5 week input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
     * week format (yyyy-W##), for example: `2013-W02`.
     *
@@ -35610,7 +35610,7 @@ var inputType = {
     * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
     *
     * The timezone to be used to read/write the `Date` instance in the model can be defined using
-    * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the areaPersonaler.
+    * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
     *
     * @param {string} ngModel Assignable angular expression to data-bind to.
     * @param {string=} name Property name of the form under which the control is published.
@@ -35670,13 +35670,13 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various areaPersonalers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (https://github.com/angular/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
         "ipt.value = '" + val + "';" +
         "angular.element(ipt).scope().$apply(function(s) { s.myForm[ipt.name].$setViewValue('" + val + "'); });";
-        areaPersonaler.executeScript(scr);
+        browser.executeScript(scr);
       }
 
       it('should initialize to model', function() {
@@ -35705,7 +35705,7 @@ var inputType = {
    * @name input[month]
    *
    * @description
-   * Input with month validation and transformation. In areaPersonalers that do not yet support
+   * Input with month validation and transformation. In browsers that do not yet support
    * the HTML5 month input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
    * month format (yyyy-MM), for example: `2009-01`.
    *
@@ -35715,7 +35715,7 @@ var inputType = {
    * to the first of the month.
    *
    * The timezone to be used to read/write the `Date` instance in the model can be defined using
-   * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the areaPersonaler.
+   * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
    *
    * @param {string} ngModel Assignable angular expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
@@ -35774,13 +35774,13 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various areaPersonalers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (https://github.com/angular/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
         "ipt.value = '" + val + "';" +
         "angular.element(ipt).scope().$apply(function(s) { s.myForm[ipt.name].$setViewValue('" + val + "'); });";
-        areaPersonaler.executeScript(scr);
+        browser.executeScript(scr);
       }
 
       it('should initialize to model', function() {
@@ -35822,10 +35822,10 @@ var inputType = {
    *
    * ## Issues with HTML5 constraint validation
    *
-   * In areaPersonalers that follow the
+   * In browsers that follow the
    * [HTML5 specification](https://html.spec.whatwg.org/multipage/forms.html#number-state-%28type=number%29),
    * `input[number]` does not work as expected with {@link ngModelOptions `ngModelOptions.allowInvalid`}.
-   * If a non-number is entered in the input, the areaPersonaler will report the value as an empty string,
+   * If a non-number is entered in the input, the browser will report the value as an empty string,
    * which means the view / model values in `ngModel` and subsequently the scope value
    * will also be an empty string.
    *
@@ -36249,12 +36249,12 @@ function stringBasedInputType(ctrl) {
   });
 }
 
-function textInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) {
-  baseInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler);
+function textInputType(scope, element, attr, ctrl, $sniffer, $browser) {
+  baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
   stringBasedInputType(ctrl);
 }
 
-function baseInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) {
+function baseInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   var type = lowercase(element[0].type);
 
   // In composition mode, users are still inputing intermediate text buffer,
@@ -36277,7 +36277,7 @@ function baseInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) {
 
   var listener = function(ev) {
     if (timeout) {
-      $areaPersonaler.defer.cancel(timeout);
+      $browser.defer.cancel(timeout);
       timeout = null;
     }
     if (composing) return;
@@ -36291,7 +36291,7 @@ function baseInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) {
       value = trim(value);
     }
 
-    // If a control is suffering from bad input (due to native validators), areaPersonalers discard its
+    // If a control is suffering from bad input (due to native validators), browsers discard its
     // value, so it may be necessary to revalidate (by calling $setViewValue again) even if the
     // control's value is the same empty value twice in a row.
     if (ctrl.$viewValue !== value || (value === '' && ctrl.$$hasNativeValidators)) {
@@ -36299,14 +36299,14 @@ function baseInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) {
     }
   };
 
-  // if the areaPersonaler does support "input" event, we are fine - except on IE9 which doesn't fire the
+  // if the browser does support "input" event, we are fine - except on IE9 which doesn't fire the
   // input event on backspace, delete or cut
   if ($sniffer.hasEvent('input')) {
     element.on('input', listener);
   } else {
     var deferListener = function(ev, input, origValue) {
       if (!timeout) {
-        timeout = $areaPersonaler.defer(function() {
+        timeout = $browser.defer(function() {
           timeout = null;
           if (!input || input.value !== origValue) {
             listener(ev);
@@ -36331,13 +36331,13 @@ function baseInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) {
     }
   }
 
-  // if user paste into input using mouse on older areaPersonaler
-  // or form autocomplete on newer areaPersonaler, we need "change" event to catch it
+  // if user paste into input using mouse on older browser
+  // or form autocomplete on newer browser, we need "change" event to catch it
   element.on('change', listener);
 
   // Some native input types (date-family) have the ability to change validity without
   // firing any input/change events.
-  // For these event types, when native validators are present and the areaPersonaler supports the type,
+  // For these event types, when native validators are present and the browser supports the type,
   // check for validity changes on various DOM events.
   if (PARTIAL_VALIDATION_TYPES[type] && ctrl.$$hasNativeValidators && type === attr.type) {
     element.on(PARTIAL_VALIDATION_EVENTS, function(ev) {
@@ -36345,7 +36345,7 @@ function baseInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) {
         var validity = this[VALIDITY_STATE_PROPERTY];
         var origBadInput = validity.badInput;
         var origTypeMismatch = validity.typeMismatch;
-        timeout = $areaPersonaler.defer(function() {
+        timeout = $browser.defer(function() {
           timeout = null;
           if (validity.badInput !== origBadInput || validity.typeMismatch !== origTypeMismatch) {
             listener(ev);
@@ -36447,9 +36447,9 @@ function createDateParser(regexp, mapping) {
 }
 
 function createDateInputType(type, regexp, parseDate, format) {
-  return function dynamicDateInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler, $filter) {
+  return function dynamicDateInputType(scope, element, attr, ctrl, $sniffer, $browser, $filter) {
     badInputChecker(scope, element, attr, ctrl);
-    baseInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler);
+    baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
     var timezone = ctrl && ctrl.$options && ctrl.$options.timezone;
     var previousDate;
 
@@ -36529,9 +36529,9 @@ function badInputChecker(scope, element, attr, ctrl) {
   }
 }
 
-function numberInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) {
+function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   badInputChecker(scope, element, attr, ctrl);
-  baseInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler);
+  baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
 
   ctrl.$$parserName = 'number';
   ctrl.$parsers.push(function(value) {
@@ -36583,10 +36583,10 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) 
   }
 }
 
-function urlInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) {
+function urlInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   // Note: no badInputChecker here by purpose as `url` is only a validation
-  // in areaPersonalers, i.e. we can always read out input.value even if it is not valid!
-  baseInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler);
+  // in browsers, i.e. we can always read out input.value even if it is not valid!
+  baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
   stringBasedInputType(ctrl);
 
   ctrl.$$parserName = 'url';
@@ -36596,10 +36596,10 @@ function urlInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) {
   };
 }
 
-function emailInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler) {
+function emailInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   // Note: no badInputChecker here by purpose as `url` is only a validation
-  // in areaPersonalers, i.e. we can always read out input.value even if it is not valid!
-  baseInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler);
+  // in browsers, i.e. we can always read out input.value even if it is not valid!
+  baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
   stringBasedInputType(ctrl);
 
   ctrl.$$parserName = 'email';
@@ -36644,7 +36644,7 @@ function parseConstantExpr($parse, context, name, expression, fallback) {
   return fallback;
 }
 
-function checkboxInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler, $filter, $parse) {
+function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filter, $parse) {
   var trueValue = parseConstantExpr($parse, scope, 'ngTrueValue', attr.ngTrueValue, true);
   var falseValue = parseConstantExpr($parse, scope, 'ngFalseValue', attr.ngFalseValue, false);
 
@@ -36719,7 +36719,7 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler
  * @description
  * HTML input element control. When used together with {@link ngModel `ngModel`}, it provides data-binding,
  * input state control, and validation.
- * Input control follows HTML5 input types and polyfills the HTML5 validation behavior for older areaPersonalers.
+ * Input control follows HTML5 input types and polyfills the HTML5 validation behavior for older browsers.
  *
  * <div class="alert alert-warning">
  * **Note:** Not every feature offered is available for all input types.
@@ -36848,8 +36848,8 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $areaPersonaler
       </file>
     </example>
  */
-var inputDirective = ['$areaPersonaler', '$sniffer', '$filter', '$parse',
-    function($areaPersonaler, $sniffer, $filter, $parse) {
+var inputDirective = ['$browser', '$sniffer', '$filter', '$parse',
+    function($browser, $sniffer, $filter, $parse) {
   return {
     restrict: 'E',
     require: ['?ngModel'],
@@ -36857,7 +36857,7 @@ var inputDirective = ['$areaPersonaler', '$sniffer', '$filter', '$parse',
       pre: function(scope, element, attr, ctrls) {
         if (ctrls[0]) {
           (inputType[lowercase(attr.type)] || inputType.text)(scope, element, attr, ctrls[0], $sniffer,
-                                                              $areaPersonaler, $filter, $parse);
+                                                              $browser, $filter, $parse);
         }
       }
     }
@@ -36958,7 +36958,7 @@ var ngValueDirective = function() {
  * `{{ expression }}` which is similar but less verbose.
  *
  * It is preferable to use `ngBind` instead of `{{ expression }}` if a template is momentarily
- * displayed by the areaPersonaler in its raw state before Angular compiles it. Since `ngBind` is an
+ * displayed by the browser in its raw state before Angular compiles it. Since `ngBind` is an
  * element attribute, it makes the bindings invisible to the user while the page is loading.
  *
  * An alternative solution to this problem would be using the
@@ -37629,12 +37629,12 @@ var ngClassEvenDirective = classDirective('Even', 1);
  *
  * @description
  * The `ngCloak` directive is used to prevent the Angular html template from being briefly
- * displayed by the areaPersonaler in its raw (uncompiled) form while your application is loading. Use this
+ * displayed by the browser in its raw (uncompiled) form while your application is loading. Use this
  * directive to avoid the undesirable flicker effect caused by the html template display.
  *
  * The directive can be applied to the `<body>` element, but the preferred usage is to apply
  * multiple `ngCloak` directives to small portions of the page to permit progressive rendering
- * of the areaPersonaler view.
+ * of the browser view.
  *
  * `ngCloak` works in cooperation with the following css rule embedded within `angular.js` and
  * `angular.min.js`.
@@ -37646,7 +37646,7 @@ var ngClassEvenDirective = classDirective('Even', 1);
  * }
  * ```
  *
- * When this css rule is loaded by the areaPersonaler, all html elements (including their children) that
+ * When this css rule is loaded by the browser, all html elements (including their children) that
  * are tagged with the `ngCloak` directive are hidden. When Angular encounters this directive
  * during the compilation of the template it deletes the `ngCloak` element attribute, making
  * the compiled element visible.
@@ -38042,8 +38042,8 @@ var ngControllerDirective = [function() {
           var evilError = element(by.id('evilError'));
 
           function getAndClearSevereErrors() {
-            return areaPersonaler.manage().logs().get('areaPersonaler').then(function(areaPersonalerLog) {
-              return areaPersonalerLog.filter(function(logEntry) {
+            return browser.manage().logs().get('browser').then(function(browserLog) {
+              return browserLog.filter(function(logEntry) {
                 return logEntry.level.value > webdriver.logging.Level.WARNING.value;
               });
             });
@@ -38057,7 +38057,7 @@ var ngControllerDirective = [function() {
             getAndClearSevereErrors().then(function(filteredLog) {
               expect(filteredLog.length).toEqual(0);
               if (filteredLog.length) {
-                console.log('areaPersonaler console errors: ' + util.inspect(filteredLog));
+                console.log('browser console errors: ' + util.inspect(filteredLog));
               }
             });
           }
@@ -38084,7 +38084,7 @@ var ngControllerDirective = [function() {
           // For now, we only test on Chrome,
           // as Safari does not load the page with Protractor's injected scripts,
           // and Firefox webdriver always disables content security policy (#6358)
-          if (areaPersonaler.params.areaPersonaler !== 'chrome') {
+          if (browser.params.browser !== 'chrome') {
             return;
           }
 
@@ -38093,8 +38093,8 @@ var ngControllerDirective = [function() {
             clearErrors();
             // Need to reload the page as the page is already loaded when
             // we come here
-            areaPersonaler.driver.getCurrentUrl().then(function(url) {
-              areaPersonaler.get(url);
+            browser.driver.getCurrentUrl().then(function(url) {
+              browser.get(url);
             });
             expectNoErrors();
           });
@@ -38744,12 +38744,12 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
  * {@link $sce#trustAsResourceUrl wrap them} as trusted values. Refer to Angular's {@link
  * ng.$sce Strict Contextual Escaping}.
  *
- * In addition, the areaPersonaler's
- * [Same Origin Policy](https://code.google.com/p/areaPersonalersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest)
+ * In addition, the browser's
+ * [Same Origin Policy](https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest)
  * and [Cross-Origin Resource Sharing (CORS)](http://www.w3.org/TR/cors/)
  * policy may further restrict whether the template is successfully loaded.
- * For example, `ngInclude` won't work for cross-domain requests on all areaPersonalers and for `file://`
- * access on some areaPersonalers.
+ * For example, `ngInclude` won't work for cross-domain requests on all browsers and for `file://`
+ * access on some browsers.
  *
  * @animations
  * | Animation                        | Occurs                              |
@@ -38766,7 +38766,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
  *                 make sure you wrap it in **single** quotes, e.g. `src="'myPartialTemplate.html'"`.
  * @param {string=} onload Expression to evaluate when a new partial is loaded.
  *                  <div class="alert alert-warning">
- *                  **Note:** When using onload on SVG elements in IE11, the areaPersonaler will try to call
+ *                  **Note:** When using onload on SVG elements in IE11, the browser will try to call
  *                  a function with the name on the window element, which will usually throw a
  *                  "function is undefined" error. To fix this, you can instead use `data-onload` or a
  *                  different form that {@link guide/directive#normalization matches} `onload`.
@@ -38856,7 +38856,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
       });
 
       it('should load template2.html', function() {
-        if (areaPersonaler.params.areaPersonaler == 'firefox') {
+        if (browser.params.browser == 'firefox') {
           // Firefox can't handle using selects
           // See https://github.com/angular/protractor/issues/480
           return;
@@ -38867,7 +38867,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
       });
 
       it('should change to blank', function() {
-        if (areaPersonaler.params.areaPersonaler == 'firefox') {
+        if (browser.params.browser == 'firefox') {
           // Firefox can't handle using selects
           return;
         }
@@ -39363,7 +39363,7 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
  * data-binding. Notice how different directives (`contenteditable`, `ng-model`, and `required`)
  * collaborate together to achieve the desired result.
  *
- * `contenteditable` is an HTML5 attribute, which tells the areaPersonaler to let the element
+ * `contenteditable` is an HTML5 attribute, which tells the browser to let the element
  * contents be edited in place by the user.
  *
  * We are using the {@link ng.service:$sce $sce} service here and include the {@link ngSanitize $sanitize}
@@ -39407,7 +39407,7 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
               // Write data to the model
               function read() {
                 var html = element.html();
-                // When we clear the content editable the areaPersonaler leaves a <br> behind
+                // When we clear the content editable the browser leaves a <br> behind
                 // If strip-br attribute is provided then we strip this out
                 if ( attrs.stripBr && html == '<br>' ) {
                   html = '';
@@ -39431,7 +39431,7 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
     </file>
     <file name="protractor.js" type="protractor">
     it('should data-bind and become invalid', function() {
-      if (areaPersonaler.params.areaPersonaler == 'safari' || areaPersonaler.params.areaPersonaler == 'firefox') {
+      if (browser.params.browser == 'safari' || browser.params.browser == 'firefox') {
         // SafariDriver can't handle contenteditable
         // and Firefox driver can't clear contenteditables very well
         return;
@@ -40407,7 +40407,7 @@ var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
  *     `<input type="date">`, `<input type="time">`, ... . It understands UTC/GMT and the
  *     continental US time zone abbreviations, but for general use, use a time zone offset, for
  *     example, `'+0430'` (4 hours, 30 minutes east of the Greenwich meridian)
- *     If not specified, the timezone of the areaPersonaler will be used.
+ *     If not specified, the timezone of the browser will be used.
  *
  * @example
 
@@ -41159,7 +41159,7 @@ var ngOptionsDirective = ['$compile', '$parse', function($compile, $parse) {
 
           if (option && !option.disabled) {
             // Don't update the option when it is already selected.
-            // For example, the areaPersonaler will select the first option by default. In that case,
+            // For example, the browser will select the first option by default. In that case,
             // most properties are set automatically - except the `selected` attribute, which we
             // set always
 
@@ -41733,11 +41733,11 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  * However, there are a limitations compared to array iteration:
  *
  * - The JavaScript specification does not define the order of keys
- *   returned for an object, so Angular relies on the order returned by the areaPersonaler
- *   when running `for key in myObj`. areaPersonalers generally follow the strategy of providing
+ *   returned for an object, so Angular relies on the order returned by the browser
+ *   when running `for key in myObj`. Browsers generally follow the strategy of providing
  *   keys in the order in which they were defined, although there are exceptions when keys are deleted
  *   and reinstated. See the
- *   [MDN page on `delete` for more info](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete#Cross-areaPersonaler_notes).
+ *   [MDN page on `delete` for more info](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete#Cross-browser_notes).
  *
  * - `ngRepeat` will silently *ignore* object keys starting with `$`, because
  *   it's a prefix used by Angular for public (`$`) and private (`$$`) properties.
@@ -44131,12 +44131,12 @@ var NG_ANIMATE_CHILDREN_DATA = '$$ngAnimateChildren';
 var CSS_PREFIX = '', TRANSITION_PROP, TRANSITIONEND_EVENT, ANIMATION_PROP, ANIMATIONEND_EVENT;
 
 // If unprefixed events are not supported but webkit-prefixed are, use the latter.
-// Otherwise, just use W3C names, areaPersonalers not supporting them at all will just ignore them.
+// Otherwise, just use W3C names, browsers not supporting them at all will just ignore them.
 // Note: Chrome implements `window.onwebkitanimationend` and doesn't implement `window.onanimationend`
 // but at the same time dispatches the `animationend` event and not `webkitAnimationEnd`.
 // Register both events in case `window.onanimationend` is not supported because of that,
 // do the same for `transitionend` as Safari is likely to exhibit similar behavior.
-// Also, the only modern areaPersonaler that uses vendor prefixes for transitions/keyframes is webkit
+// Also, the only modern browser that uses vendor prefixes for transitions/keyframes is webkit
 // therefore there is no reason to test anymore for other vendor prefixes:
 // http://caniuse.com/#search=transition
 if (isUndefined(window.ontransitionend) && isDefined(window.onwebkittransitionend)) {
@@ -44639,7 +44639,7 @@ var ANIMATE_TIMER_KEY = '$$animateCss';
  * to side-step how `$animate` and ngAnimate work, but the goal is to allow pre-existing animations or
  * directives to create more complex animations that can be purely driven using CSS code.
  *
- * Note that only areaPersonalers that support CSS transitions and/or keyframe animations are capable of
+ * Note that only browsers that support CSS transitions and/or keyframe animations are capable of
  * rendering animations triggered via `$animateCss` (bad news for IE9 and lower).
  *
  * ## Usage
@@ -45437,7 +45437,7 @@ var $AnimateCssProvider = ['$animateProvider', function($animateProvider) {
         var elapsedTime = parseFloat(ev.elapsedTime.toFixed(ELAPSED_TIME_MAX_DECIMAL_PLACES));
 
         /* $manualTimeStamp is a mocked timeStamp value which is set
-         * within areaPersonalerTrigger(). This is only here so that tests can
+         * within browserTrigger(). This is only here so that tests can
          * mock animations properly. Real events fallback to event.timeStamp,
          * or, if they don't, then a timeStamp is automatically created for them.
          * We're checking to see if the timeStamp surpasses the expected delay,
@@ -45644,7 +45644,7 @@ var $$AnimateCssDriverProvider = ['$$animationProvider', function($$animationPro
   this.$get = ['$animateCss', '$rootScope', '$$AnimateRunner', '$rootElement', '$sniffer', '$$jqLite', '$document',
        function($animateCss,   $rootScope,   $$AnimateRunner,   $rootElement,   $sniffer,   $$jqLite,   $document) {
 
-    // only areaPersonalers that support these properties can render animations
+    // only browsers that support these properties can render animations
     if (!$sniffer.animations && !$sniffer.transitions) return noop;
 
     var bodyNode = $document[0].body;
@@ -46586,7 +46586,7 @@ var $$AnimateQueueProvider = ['$animateProvider', function($animateProvider) {
       // the element itself, therefore  there is no need to continue further
       // past this point if not enabled
       // Animations are also disabled if the document is currently hidden (page is not visible
-      // to the user), because areaPersonalers slow down or do not flush calls to requestAnimationFrame
+      // to the user), because browsers slow down or do not flush calls to requestAnimationFrame
       var skipAnimations = !animationsEnabled || $document[0].hidden || disabledElementsLookup.get(node);
       var existingAnimation = (!skipAnimations && activeAnimationsLookup.get(node)) || {};
       var hasExistingAnimation = !!existingAnimation.state;
@@ -50907,16 +50907,16 @@ function $UrlRouterProvider(   $locationProvider,   $urlMatcherFactory) {
    * @requires $location
    * @requires $rootScope
    * @requires $injector
-   * @requires $areaPersonaler
+   * @requires $browser
    *
    * @description
    *
    */
   this.$get = $get;
-  $get.$inject = ['$location', '$rootScope', '$injector', '$areaPersonaler'];
-  function $get(   $location,   $rootScope,   $injector,   $areaPersonaler) {
+  $get.$inject = ['$location', '$rootScope', '$injector', '$browser'];
+  function $get(   $location,   $rootScope,   $injector,   $browser) {
 
-    var baseHref = $areaPersonaler.baseHref(), location = $location.url(), lastPushedUrl;
+    var baseHref = $browser.baseHref(), location = $location.url(), lastPushedUrl;
 
     function appendBasePath(url, isHtml5, absolute) {
       if (baseHref === '/') return url;
@@ -52581,7 +52581,7 @@ angular.module('ui.router.state').provider('$uiViewScroll', $ViewScrollProvider)
  * @param {string=} name A view name. The name should be unique amongst the other views in the
  * same state. You can have views of the same name that live in different states.
  *
- * @param {string=} autoscroll It allows you to set the scroll behavior of the areaPersonaler window
+ * @param {string=} autoscroll It allows you to set the scroll behavior of the browser window
  * when a view is populated. By default, $anchorScroll is overridden by ui-router's custom scroll
  * service, {@link ui.router.state.$uiViewScroll}. This custom service let's you
  * scroll ui-view elements into view when they are populated during a state activation.
@@ -52897,7 +52897,7 @@ function stateContext(el) {
  * the link will trigger a state transition with optional parameters. 
  *
  * Also middle-clicking, right-clicking, and ctrl-clicking on the link will be 
- * handled natively by the areaPersonaler.
+ * handled natively by the browser.
  *
  * You can also use relative state paths within ui-sref, just like the relative 
  * paths passed to `$state.go()`. You just need to be aware that the path is relative
@@ -53807,11 +53807,11 @@ IonicModule
  * @module ionic
  * @description
  * $ionicHistory keeps track of views as the user navigates through an app. Similar to the way a
- * areaPersonaler behaves, an Ionic app is able to keep track of the previous view, the current view, and
- * the forward view (if there is one).  However, a typical web areaPersonaler only keeps track of one
+ * browser behaves, an Ionic app is able to keep track of the previous view, the current view, and
+ * the forward view (if there is one).  However, a typical web browser only keeps track of one
  * history stack in a linear fashion.
  *
- * Unlike a traditional areaPersonaler environment, apps and webapps have parallel independent histories,
+ * Unlike a traditional browser environment, apps and webapps have parallel independent histories,
  * such as with tabs. Should a user navigate few pages deep on one tab, and then switch to a new
  * tab and back, the back button relates not to the previous tab, but to the previous pages
  * visited within _that_ tab.
@@ -54706,7 +54706,7 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
  * view from center to left. However, Android will transition with the entering view going from
  * bottom to center, covering the previous view, which remains stationary. It should be noted
  * that when a platform is not iOS or Android, then it'll default to iOS. So if you are
- * developing on a desktop areaPersonaler, it's going to take on iOS default configs.
+ * developing on a desktop browser, it's going to take on iOS default configs.
  *
  * These configs can be changed using the `$ionicConfigProvider` during the configuration phase
  * of your app. Additionally, `$ionicConfig` can also set and get config values during the run
@@ -58408,7 +58408,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 angular.module('ngIOS9UIWebViewPatch', ['ng']).config(['$provide', function($provide) {
   'use strict';
 
-  $provide.decorator('$areaPersonaler', ['$delegate', '$window', function($delegate, $window) {
+  $provide.decorator('$browser', ['$delegate', '$window', function($delegate, $window) {
 
     if (isIOS9UIWebView($window.navigator.userAgent)) {
       return applyIOS9Shim($delegate);
@@ -58420,17 +58420,17 @@ angular.module('ngIOS9UIWebViewPatch', ['ng']).config(['$provide', function($pro
       return /(iPhone|iPad|iPod).* OS 9_\d/.test(userAgent) && !/Version\/9\./.test(userAgent);
     }
 
-    function applyIOS9Shim(areaPersonaler) {
+    function applyIOS9Shim(browser) {
       var pendingLocationUrl = null;
-      var originalUrlFn = areaPersonaler.url;
+      var originalUrlFn = browser.url;
 
-      areaPersonaler.url = function() {
+      browser.url = function() {
         if (arguments.length) {
           pendingLocationUrl = arguments[0];
-          return originalUrlFn.apply(areaPersonaler, arguments);
+          return originalUrlFn.apply(browser, arguments);
         }
 
-        return pendingLocationUrl || originalUrlFn.apply(areaPersonaler, arguments);
+        return pendingLocationUrl || originalUrlFn.apply(browser, arguments);
       };
 
       window.addEventListener('popstate', clearPendingLocationUrl, false);
@@ -58440,7 +58440,7 @@ angular.module('ngIOS9UIWebViewPatch', ['ng']).config(['$provide', function($pro
         pendingLocationUrl = null;
       }
 
-      return areaPersonaler;
+      return browser;
     }
   }]);
 }]);
@@ -62535,7 +62535,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       }
 
       // Get the size of every element AFTER the repeater. We have to get the margin before and
-      // after the first/last element to fix a areaPersonaler bug with getComputedStyle() not counting
+      // after the first/last element to fix a browser bug with getComputedStyle() not counting
       // the first/last child's margins into height.
       var style = getComputedStyle(afterItemsNode) || {};
       var firstStyle = afterItemsNode.firstElementChild && getComputedStyle(afterItemsNode.firstElementChild) || {};
@@ -63030,10 +63030,10 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
  *
  * @description
  * The ionContent directive provides an easy to use content area that can be configured
- * to use Ionic's custom Scroll View, or the built in overflow scrolling of the areaPersonaler.
+ * to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
  *
  * While we recommend using the custom Scroll features in Ionic in most cases, sometimes
- * (for performance reasons) only the areaPersonaler's native overflow scrolling will suffice,
+ * (for performance reasons) only the browser's native overflow scrolling will suffice,
  * and so we've made it easy to toggle between the Ionic scroll implementation and
  * overflow scrolling.
  *
@@ -63934,7 +63934,7 @@ IonicModule
 * @restrict E
 *
 * New in Ionic 1.2. It is strongly recommended that you use `<ion-label>` in place
-* of any `<label>` elements for maximum cross-areaPersonaler support and performance.
+* of any `<label>` elements for maximum cross-browser support and performance.
 *
 * Creates a label for a form input.
 *
@@ -66104,7 +66104,7 @@ function($timeout, $ionicGesture, $window) {
         sideMenuCtrl.setContent(content);
 
         // add gesture handlers
-        var gestureOpts = { stop_areaPersonaler_behavior: false };
+        var gestureOpts = { stop_browser_behavior: false };
         gestureOpts.prevent_default_directions = ['left', 'right'];
         var contentTapGesture = $ionicGesture.on('tap', onContentTap, $element, gestureOpts);
         var dragRightGesture = $ionicGesture.on('dragright', onDragX, $element, gestureOpts);
@@ -67003,7 +67003,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
           tabNavElement = tabContentEle = childElement = null;
         });
 
-        //Remove title attribute so areaPersonaler-tooltip does not apear
+        //Remove title attribute so browser-tooltip does not apear
         $element[0].removeAttribute('title');
 
         if (navViewName) {
@@ -67110,7 +67110,7 @@ IonicModule
       var tabsCtrl = ctrls[0],
         tabCtrl = ctrls[1];
 
-      //Remove title attribute so areaPersonaler-tooltip does not apear
+      //Remove title attribute so browser-tooltip does not apear
       $element[0].removeAttribute('title');
 
       $scope.selectTab = function(e) {

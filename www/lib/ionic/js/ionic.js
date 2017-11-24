@@ -456,7 +456,7 @@ window.ionic.version = '1.3.4';
  *
  * Author: Max Lynch <max@drifty.com>
  *
- * Framework events handles various mobile areaPersonaler events, and
+ * Framework events handles various mobile browser events, and
  * detects special events like tap/swipe/etc. and emits them
  * as custom events that can be used in an app.
  *
@@ -480,7 +480,7 @@ window.ionic.version = '1.3.4';
         evt = document.createEvent("CustomEvent");
         evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
       } catch (error) {
-        // fallback for areaPersonalers that don't support createEvent('CustomEvent')
+        // fallback for browsers that don't support createEvent('CustomEvent')
         evt = document.createEvent("Event");
         for (var param in params) {
           evt[param] = params[param];
@@ -641,11 +641,11 @@ window.ionic.version = '1.3.4';
 
   // default settings
   ionic.Gestures.defaults = {
-    // add css to the element to prevent the areaPersonaler from doing
+    // add css to the element to prevent the browser from doing
     // its native behavior. this doesnt prevent the scrolling,
     // but cancels the contextmenu, tap highlighting etc
     // set to false to disable this
-    stop_areaPersonaler_behavior: 'disable-user-behavior'
+    stop_browser_behavior: 'disable-user-behavior'
   };
 
   // detect touchevents
@@ -745,9 +745,9 @@ window.ionic.version = '1.3.4';
         ionic.Gestures.utils.extend({}, ionic.Gestures.defaults),
         options || {});
 
-    // add some css to the element to prevent the areaPersonaler from doing its native behavoir
-    if(this.options.stop_areaPersonaler_behavior) {
-      ionic.Gestures.utils.stopDefaultareaPersonalerBehavior(this.element, this.options.stop_areaPersonaler_behavior);
+    // add some css to the element to prevent the browser from doing its native behavoir
+    if(this.options.stop_browser_behavior) {
+      ionic.Gestures.utils.stopDefaultBrowserBehavior(this.element, this.options.stop_browser_behavior);
     }
 
     // start detection on touchstart
@@ -961,7 +961,7 @@ window.ionic.version = '1.3.4';
 
 
     /**
-     * we have different events for each device/areaPersonaler
+     * we have different events for each device/browser
      * determine what we need and set them in the ionic.Gestures.EVENT_TYPES constant
      */
     determineEventTypes: function determineEventTypes() {
@@ -979,7 +979,7 @@ window.ionic.version = '1.3.4';
           'touchmove',
           'touchend touchcancel'];
       }
-      // for non pointer events areaPersonalers and mixed areaPersonalers,
+      // for non pointer events browsers and mixed browsers,
       // like chrome on windows8 touch laptop
       else {
         types = [
@@ -1040,8 +1040,8 @@ window.ionic.version = '1.3.4';
         srcEvent: ev,
 
         /**
-         * prevent the areaPersonaler default actions
-         * mostly used to disable scrolling of the areaPersonaler
+         * prevent the browser default actions
+         * mostly used to disable scrolling of the browser
          */
         preventDefault: function() {
           if(this.srcEvent.preventManipulation) {
@@ -1311,11 +1311,11 @@ window.ionic.version = '1.3.4';
 
 
     /**
-     * stop areaPersonaler default behavior with css class
+     * stop browser default behavior with css class
      * @param   {HtmlElement}   element
      * @param   {Object}        css_class
      */
-    stopDefaultareaPersonalerBehavior: function stopDefaultareaPersonalerBehavior(element, css_class) {
+    stopDefaultBrowserBehavior: function stopDefaultBrowserBehavior(element, css_class) {
       // changed from making many style changes to just adding a preset classname
       // less DOM manipulations, less code, and easier to control in the CSS side of things
       // hammer.js doesn't come with CSS, but ionic does, which is why we prefer this method
@@ -1768,7 +1768,7 @@ window.ionic.version = '1.3.4';
       correct_for_drag_min_distance: true,
       // set 0 for unlimited, but this can conflict with transform
       drag_max_touches: 1,
-      // prevent default areaPersonaler behavior when dragging occurs
+      // prevent default browser behavior when dragging occurs
       // be careful with it, it makes the element a blocking element
       // when you are using the drag gesture, it is a good practice to set this true
       drag_block_horizontal: true,
@@ -1866,7 +1866,7 @@ window.ionic.version = '1.3.4';
           // direction event, like dragdown
           inst.trigger(this.name + ev.direction, ev);
 
-          // block the areaPersonaler events
+          // block the browser events
           if( (inst.options.drag_block_vertical && ionic.Gestures.utils.isVertical(ev.direction)) ||
               (inst.options.drag_block_horizontal && !ionic.Gestures.utils.isVertical(ev.direction))) {
                 ev.preventDefault();
@@ -1899,7 +1899,7 @@ window.ionic.version = '1.3.4';
       transform_min_scale: 0.01,
       // rotation in degrees
       transform_min_rotation: 1,
-      // prevent default areaPersonaler behavior when two touches are on the screen
+      // prevent default browser behavior when two touches are on the screen
       // but it makes the element a blocking element
       // when you are using the transform gesture, it is a good practice to set this true
       transform_always_block: false
@@ -2079,7 +2079,7 @@ window.ionic.version = '1.3.4';
   var self = ionic.Platform = {
 
     // Put navigator on platform so it can be mocked and set
-    // the areaPersonaler does not allow window.navigator to be set
+    // the browser does not allow window.navigator to be set
     navigator: window.navigator,
 
     /**
@@ -2122,9 +2122,9 @@ window.ionic.version = '1.3.4';
      * anywhere and does not need to be wrapped by any additonal methods.
      * When the app is within a WebView (Cordova), it'll fire
      * the callback once the device is ready. If the app is within
-     * a web areaPersonaler, it'll fire the callback after `window.load`.
+     * a web browser, it'll fire the callback after `window.load`.
      * Please remember that Cordova features (Camera, FileSystem, etc) still
-     * will not work in a web areaPersonaler.
+     * will not work in a web browser.
      * @param {function} callback The function to call.
      */
     ready: function(cb) {
@@ -2193,7 +2193,7 @@ window.ionic.version = '1.3.4';
           self.platforms.push('trigger');
         }
       } else {
-        self.platforms.push('areaPersonaler');
+        self.platforms.push('browser');
       }
       if (self.isIPad()) self.platforms.push('ipad');
 
@@ -2466,7 +2466,7 @@ window.ionic.version = '1.3.4';
       document.addEventListener("deviceready", onPlatformReady, false);
     } else {
       // the window and scripts are fully loaded, but the window object doesn't have the
-      // cordova/phonegap object, so its just a areaPersonaler, not a webview wrapped w/ cordova
+      // cordova/phonegap object, so its just a browser, not a webview wrapped w/ cordova
       onPlatformReady();
     }
     if (windowLoadListenderAttached) {
@@ -2619,10 +2619,10 @@ window.ionic.version = '1.3.4';
  * @name tap
  * @module ionic
  * @description
- * On touch devices such as a phone or tablet, some areaPersonalers implement a 300ms delay between
- * the time the user stops touching the display and the moment the areaPersonaler executes the
- * click. This delay was initially introduced so the areaPersonaler can know whether the user wants to
- * double-tap to zoom in on the webpage.  Basically, the areaPersonaler waits roughly 300ms to see if
+ * On touch devices such as a phone or tablet, some browsers implement a 300ms delay between
+ * the time the user stops touching the display and the moment the browser executes the
+ * click. This delay was initially introduced so the browser can know whether the user wants to
+ * double-tap to zoom in on the webpage.  Basically, the browser waits roughly 300ms to see if
  * the user is double-tapping, or just tapping on the display once.
  *
  * Out of the box, Ionic automatically removes the 300ms delay in order to make Ionic apps
@@ -2630,14 +2630,14 @@ window.ionic.version = '1.3.4';
  * [fastclick](https://github.com/ftlabs/fastclick) and Angular's
  * [ngTouch](https://docs.angularjs.org/api/ngTouch) should not be included, to avoid conflicts.
  *
- * Some areaPersonalers already remove the delay with certain settings, such as the CSS property
+ * Some browsers already remove the delay with certain settings, such as the CSS property
  * `touch-events: none` or with specific meta tag viewport values. However, each of these
- * areaPersonalers still handle clicks differently, such as when to fire off or cancel the event
+ * browsers still handle clicks differently, such as when to fire off or cancel the event
  * (like scrolling when the target is a button, or holding a button down).
- * For areaPersonalers that already remove the 300ms delay, consider Ionic's tap system as a way to
+ * For browsers that already remove the 300ms delay, consider Ionic's tap system as a way to
  * normalize how clicks are handled across the various devices so there's an expected response
  * no matter what the device, platform or version. Additionally, Ionic will prevent
- * ghostclicks which even areaPersonalers that remove the delay still experience.
+ * ghostclicks which even browsers that remove the delay still experience.
  *
  * In some cases, third-party libraries may also be working with touch events which can interfere
  * with the tap system. For example, mapping libraries like Google or Leaflet Maps often implement
@@ -3678,7 +3678,7 @@ var keyboardFocusOutTimer;
 
 /**
  * on Android, orientationchange will fire before the keyboard plugin notifies
- * the areaPersonaler that the keyboard will show/is showing, so this flag indicates
+ * the browser that the keyboard will show/is showing, so this flag indicates
  * to nativeShow that there was an orientationChange and we should update
  * the viewport height with an accurate keyboard height value
  */
@@ -3908,7 +3908,7 @@ function keyboardFocusIn(e) {
     ionic.keyboard.isClosing = false;
   }
 
-  // attempt to prevent areaPersonaler from natively scrolling input into view while
+  // attempt to prevent browser from natively scrolling input into view while
   // we are trying to do the same (while we are scrolling) if the user taps the
   // keyboard
   document.addEventListener('keydown', keyboardOnKeyDown, false);
@@ -4003,7 +4003,7 @@ function keyboardOrientationChange() {
 }
 
 /**
- * Event handler for 'keydown' event. Tries to prevent areaPersonaler from natively
+ * Event handler for 'keydown' event. Tries to prevent browser from natively
  * scrolling an input into view when a user taps the keyboard while we are
  * scrolling the input into view ourselves with JS.
  */
@@ -4207,7 +4207,7 @@ function keyboardGetHeight() {
   }
 
   // fallback for when it's the webview without the plugin
-  // or for just the standard web areaPersonaler
+  // or for just the standard web browser
   // TODO: have these be based on device
   if (ionic.Platform.isIOS()) {
     if (ionic.keyboard.isLandscape) {
@@ -4398,7 +4398,7 @@ function viewportUpdate() {
 
     if (version > 7) {
       // iPad >= 7.1
-      // https://issues.apache.org/jira/areaPersonale/CB-4323
+      // https://issues.apache.org/jira/browse/CB-4323
       delete viewportProperties.width;
 
     } else {
@@ -4416,7 +4416,7 @@ function viewportUpdate() {
           viewportProperties.height = DEVICE_HEIGHT;
         }
       } else {
-        // iPad <= 6.1 areaPersonaler
+        // iPad <= 6.1 Browser
         if (version < 7) {
           viewportProperties.height = '0';
         }
@@ -4444,10 +4444,10 @@ function viewportUpdate() {
       }
 
     } else {
-      // iPhone areaPersonaler
+      // iPhone Browser
 
       if (version < 7) {
-        // iPhone <= 6.1 areaPersonaler
+        // iPhone <= 6.1 Browser
         // if height was set it needs to get removed with this hack for <= 6.1
         if (initHeight) viewportProperties.height = '0';
       }
@@ -4782,7 +4782,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__content = options.el.firstElementChild;
 
     //Remove any scrollTop attached to these elements; they are virtual scroll now
-    //This also stops on-load-scroll-to-window.location.hash that the areaPersonaler does
+    //This also stops on-load-scroll-to-window.location.hash that the browser does
     setTimeout(function() {
       if (self.__container && self.__content) {
         self.__container.scrollTop = 0;
@@ -5115,7 +5115,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   __decelerationVelocityY: null,
 
 
-  /** the areaPersonaler-specific property to use for transforms */
+  /** the browser-specific property to use for transforms */
   __transformProperty: null,
   __perspectiveProperty: null,
 
@@ -8326,8 +8326,8 @@ ionic.views.Slider = ionic.views.View.inherit({
     var noop = function() {}; // simple no operation function
     var offloadFn = function(fn) { setTimeout(fn || noop, 0); }; // offload a functions execution
 
-    // check areaPersonaler capabilities
-    var areaPersonaler = {
+    // check browser capabilities
+    var browser = {
       addEventListener: !!window.addEventListener,
       transitions: (function(temp) {
         var props = ['transitionProperty', 'WebkitTransition', 'MozTransition', 'OTransition', 'msTransition'];
@@ -8363,7 +8363,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       if (slides.length < 2) options.continuous = false;
 
       //special case if two slides
-      if (areaPersonaler.transitions && options.continuous && slides.length < 3) {
+      if (browser.transitions && options.continuous && slides.length < 3) {
         element.appendChild(slides[0].cloneNode(true));
         element.appendChild(element.children[1].cloneNode(true));
         slides = element.children;
@@ -8386,7 +8386,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         slide.style.width = width + 'px';
         slide.setAttribute('data-index', pos);
 
-        if (areaPersonaler.transitions) {
+        if (browser.transitions) {
           slide.style.left = (pos * -width) + 'px';
           move(pos, index > pos ? -width : (index < pos ? width : 0), 0);
         }
@@ -8394,12 +8394,12 @@ ionic.views.Slider = ionic.views.View.inherit({
       }
 
       // reposition elements before and after index
-      if (options.continuous && areaPersonaler.transitions) {
+      if (options.continuous && browser.transitions) {
         move(circle(index - 1), -width, 0);
         move(circle(index + 1), width, 0);
       }
 
-      if (!areaPersonaler.transitions) element.style.left = (index * -width) + 'px';
+      if (!browser.transitions) element.style.left = (index * -width) + 'px';
 
       container.style.visibility = 'visible';
 
@@ -8437,7 +8437,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         return;
       }
 
-      if (areaPersonaler.transitions) {
+      if (browser.transitions) {
 
         var direction = Math.abs(index - to) / (index - to); // 1: backward, -1: forward
 
@@ -8468,7 +8468,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
         to = circle(to);
         animate(index * -width, to * -width, slideSpeed || speed);
-        //no fallback for a circular continuous if the areaPersonaler does not accept transitions
+        //no fallback for a circular continuous if the browser does not accept transitions
       }
 
       index = to;
@@ -8883,7 +8883,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       slides && (slides = []);
 
       // removed event listeners
-      if (areaPersonaler.addEventListener) {
+      if (browser.addEventListener) {
 
         // remove current event listeners
         element.removeEventListener(touchStartEvent, events, false);
@@ -8912,13 +8912,13 @@ ionic.views.Slider = ionic.views.View.inherit({
 
 
       // add event listeners
-      if (areaPersonaler.addEventListener) {
+      if (browser.addEventListener) {
 
         // set touchstart event on element
         element.addEventListener(touchStartEvent, events, false);
         element.addEventListener(mouseStartEvent, events, false);
 
-        if (areaPersonaler.transitions) {
+        if (browser.transitions) {
           element.addEventListener('webkitTransitionEnd', events, false);
           element.addEventListener('msTransitionEnd', events, false);
           element.addEventListener('oTransitionEnd', events, false);
@@ -10026,7 +10026,7 @@ ionic.views.Slider = ionic.views.View.inherit({
             var moveCapture = s.params.nested ? true : false;
 
             //Touch Events
-            if (s.areaPersonaler.ie) {
+            if (s.browser.ie) {
                 touchEventsTarget[action](s.touchEvents.start, s.onTouchStart, false);
                 target[action](s.touchEvents.move, s.onTouchMove, moveCapture);
                 target[action](s.touchEvents.end, s.onTouchEnd, false);
@@ -10291,7 +10291,7 @@ ionic.views.Slider = ionic.views.View.inherit({
             if (isScrolling) {
                 s.emit('onTouchMoveOpposite', s, e);
             }
-            if (typeof startMoving === 'undefined' && s.areaPersonaler.ieTouch) {
+            if (typeof startMoving === 'undefined' && s.browser.ieTouch) {
                 if (s.touches.currentX !== s.touches.startX || s.touches.currentY !== s.touches.startY) {
                     startMoving = true;
                 }
@@ -10301,7 +10301,7 @@ ionic.views.Slider = ionic.views.View.inherit({
                 isTouched = false;
                 return;
             }
-            if (!startMoving && s.areaPersonaler.ieTouch) {
+            if (!startMoving && s.browser.ieTouch) {
                 return;
             }
             s.allowClick = false;
@@ -10929,7 +10929,7 @@ ionic.views.Slider = ionic.views.View.inherit({
                 //Crazy IE10 Matrix
                 else if (matrix.length === 16)
                     curTransform = parseFloat(matrix[12]);
-                //Normal areaPersonalers
+                //Normal Browsers
                 else
                     curTransform = parseFloat(matrix[4]);
             }
@@ -10940,7 +10940,7 @@ ionic.views.Slider = ionic.views.View.inherit({
                 //Crazy IE10 Matrix
                 else if (matrix.length === 16)
                     curTransform = parseFloat(matrix[13]);
-                //Normal areaPersonalers
+                //Normal Browsers
                 else
                     curTransform = parseFloat(matrix[5]);
             }
@@ -11392,7 +11392,7 @@ ionic.views.Slider = ionic.views.View.inherit({
                     }
 
                     //Set correct perspective for IE10
-                    if (s.areaPersonaler.ie) {
+                    if (s.browser.ie) {
                         var ws = s.wrapper[0].style;
                         ws.perspectiveOrigin = center + 'px 50%';
                     }
@@ -12432,9 +12432,9 @@ ionic.views.Slider = ionic.views.View.inherit({
             return Object.prototype.toString.apply(arr) === '[object Array]';
         },
         /*==================================================
-        areaPersonaler
+        Browser
         ====================================================*/
-        areaPersonaler: {
+        browser: {
             ie: window.navigator.pointerEnabled || window.navigator.msPointerEnabled,
             ieTouch: (window.navigator.msPointerEnabled && window.navigator.msMaxTouchPoints > 1) || (window.navigator.pointerEnabled && window.navigator.maxTouchPoints > 1)
         },

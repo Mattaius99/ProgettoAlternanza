@@ -1,0 +1,36 @@
+<ion-view view-title="Guasti" style="background:#ebe0e0">
+<ion-content>
+
+  <div class="list card" ng-repeat="guasto in guasti">
+
+  <div>
+    <a class="item item-avatar" href="#/app/dettaglio/{{guasto.id_Guasto}}" style="background:	#f5f5f0">
+    <img src="https://n6-img-fp.akamaized.net/free-icon/male-user-silhouette_318-35708.jpg?size=338&ext=jpg">
+    <b><h2 style="font-family:Roboto">{{guasto.titolo}}</h2></b>
+    <p>{{guasto.data | limitTo : 10}}</p>
+    </a>
+  </div>
+
+  <div>
+    <a class="item item-avatar" href="#/app/dettaglio/{{guasto.id_Guasto}}">
+    <p>
+      {{guasto.descrizione}}
+    </p>
+  </a>
+  </div>
+</div>
+</ion-content>
+
+<!--<div class="tabs tabs-icon-only" style="background:#1b2741">
+  <a class="tab-item" href="#/app/home">
+    <i class="icon ion-home" style="color: #e93e4e"></i>
+  </a>
+  <a class="tab-item" href="#/app/mappa">
+    <i class="icon ion-map"style="color: #e93e4e"></i>
+  </a>
+  <a class="tab-item" href="#/app/areaPersonale">
+    <i class="icon ion-person"style="color: #e93e4e"></i>
+  </a>
+</div>-->
+
+</ion-view>

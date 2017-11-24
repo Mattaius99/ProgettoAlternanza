@@ -624,11 +624,11 @@ IonicModule
  * @module ionic
  * @description
  * $ionicHistory keeps track of views as the user navigates through an app. Similar to the way a
- * areaPersonaler behaves, an Ionic app is able to keep track of the previous view, the current view, and
- * the forward view (if there is one).  However, a typical web areaPersonaler only keeps track of one
+ * browser behaves, an Ionic app is able to keep track of the previous view, the current view, and
+ * the forward view (if there is one).  However, a typical web browser only keeps track of one
  * history stack in a linear fashion.
  *
- * Unlike a traditional areaPersonaler environment, apps and webapps have parallel independent histories,
+ * Unlike a traditional browser environment, apps and webapps have parallel independent histories,
  * such as with tabs. Should a user navigate few pages deep on one tab, and then switch to a new
  * tab and back, the back button relates not to the previous tab, but to the previous pages
  * visited within _that_ tab.
@@ -1523,7 +1523,7 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
  * view from center to left. However, Android will transition with the entering view going from
  * bottom to center, covering the previous view, which remains stationary. It should be noted
  * that when a platform is not iOS or Android, then it'll default to iOS. So if you are
- * developing on a desktop areaPersonaler, it's going to take on iOS default configs.
+ * developing on a desktop browser, it's going to take on iOS default configs.
  *
  * These configs can be changed using the `$ionicConfigProvider` during the configuration phase
  * of your app. Additionally, `$ionicConfig` can also set and get config values during the run
@@ -5225,7 +5225,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 angular.module('ngIOS9UIWebViewPatch', ['ng']).config(['$provide', function($provide) {
   'use strict';
 
-  $provide.decorator('$areaPersonaler', ['$delegate', '$window', function($delegate, $window) {
+  $provide.decorator('$browser', ['$delegate', '$window', function($delegate, $window) {
 
     if (isIOS9UIWebView($window.navigator.userAgent)) {
       return applyIOS9Shim($delegate);
@@ -5237,17 +5237,17 @@ angular.module('ngIOS9UIWebViewPatch', ['ng']).config(['$provide', function($pro
       return /(iPhone|iPad|iPod).* OS 9_\d/.test(userAgent) && !/Version\/9\./.test(userAgent);
     }
 
-    function applyIOS9Shim(areaPersonaler) {
+    function applyIOS9Shim(browser) {
       var pendingLocationUrl = null;
-      var originalUrlFn = areaPersonaler.url;
+      var originalUrlFn = browser.url;
 
-      areaPersonaler.url = function() {
+      browser.url = function() {
         if (arguments.length) {
           pendingLocationUrl = arguments[0];
-          return originalUrlFn.apply(areaPersonaler, arguments);
+          return originalUrlFn.apply(browser, arguments);
         }
 
-        return pendingLocationUrl || originalUrlFn.apply(areaPersonaler, arguments);
+        return pendingLocationUrl || originalUrlFn.apply(browser, arguments);
       };
 
       window.addEventListener('popstate', clearPendingLocationUrl, false);
@@ -5257,7 +5257,7 @@ angular.module('ngIOS9UIWebViewPatch', ['ng']).config(['$provide', function($pro
         pendingLocationUrl = null;
       }
 
-      return areaPersonaler;
+      return browser;
     }
   }]);
 }]);
@@ -9352,7 +9352,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       }
 
       // Get the size of every element AFTER the repeater. We have to get the margin before and
-      // after the first/last element to fix a areaPersonaler bug with getComputedStyle() not counting
+      // after the first/last element to fix a browser bug with getComputedStyle() not counting
       // the first/last child's margins into height.
       var style = getComputedStyle(afterItemsNode) || {};
       var firstStyle = afterItemsNode.firstElementChild && getComputedStyle(afterItemsNode.firstElementChild) || {};
@@ -9847,10 +9847,10 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
  *
  * @description
  * The ionContent directive provides an easy to use content area that can be configured
- * to use Ionic's custom Scroll View, or the built in overflow scrolling of the areaPersonaler.
+ * to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
  *
  * While we recommend using the custom Scroll features in Ionic in most cases, sometimes
- * (for performance reasons) only the areaPersonaler's native overflow scrolling will suffice,
+ * (for performance reasons) only the browser's native overflow scrolling will suffice,
  * and so we've made it easy to toggle between the Ionic scroll implementation and
  * overflow scrolling.
  *
@@ -10751,7 +10751,7 @@ IonicModule
 * @restrict E
 *
 * New in Ionic 1.2. It is strongly recommended that you use `<ion-label>` in place
-* of any `<label>` elements for maximum cross-areaPersonaler support and performance.
+* of any `<label>` elements for maximum cross-browser support and performance.
 *
 * Creates a label for a form input.
 *
@@ -12921,7 +12921,7 @@ function($timeout, $ionicGesture, $window) {
         sideMenuCtrl.setContent(content);
 
         // add gesture handlers
-        var gestureOpts = { stop_areaPersonaler_behavior: false };
+        var gestureOpts = { stop_browser_behavior: false };
         gestureOpts.prevent_default_directions = ['left', 'right'];
         var contentTapGesture = $ionicGesture.on('tap', onContentTap, $element, gestureOpts);
         var dragRightGesture = $ionicGesture.on('dragright', onDragX, $element, gestureOpts);
@@ -13820,7 +13820,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
           tabNavElement = tabContentEle = childElement = null;
         });
 
-        //Remove title attribute so areaPersonaler-tooltip does not apear
+        //Remove title attribute so browser-tooltip does not apear
         $element[0].removeAttribute('title');
 
         if (navViewName) {
@@ -13927,7 +13927,7 @@ IonicModule
       var tabsCtrl = ctrls[0],
         tabCtrl = ctrls[1];
 
-      //Remove title attribute so areaPersonaler-tooltip does not apear
+      //Remove title attribute so browser-tooltip does not apear
       $element[0].removeAttribute('title');
 
       $scope.selectTab = function(e) {

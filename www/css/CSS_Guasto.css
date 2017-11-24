@@ -1,0 +1,104 @@
+#div_title{
+	/*background-color: red;*/
+}
+
+#title {
+	padding-left: 20px;
+	color: #333;
+	font-family: 'Alegreya Sans';
+	font-size: 34px;
+	font-weight: 300;
+	line-height: 60px;
+	letter-spacing: -0.015em;
+	margin-bottom: 48px;
+	max-width: 600px;
+}
+
+.description{
+  color: #4d4d4d;
+	font-family: 'Alegreya Sans';
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 36px;
+	text-indent: 36px;
+	max-width: 600px;
+}
+
+
+#details{
+	margin: 20px;
+	border: inset 2px;
+	background-color: white;
+
+}
+
+#main{
+	background-color: lightgrey;
+	padding: 10px;
+	margin: 5px;
+	border: solid 1px;
+	border-color: blue;
+}
+
+#map{
+	 width: width-device;
+	 height: 400px;
+	 margin: 10px;
+	 border: solid 3px;
+	 border-color: lightblue;
+}
+
+
+input.Search[type=text] {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 0px 20px 0px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+select.Search{
+	border: 0px;
+	width: 100px;
+}
+
+a.Search{
+	text-decoration: none;
+}
+
+#scrollToTop{
+  opacity: 0.5;
+	display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 25px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+	width:50px;
+	height:50px;
+	border:0;
+}
+
+#scrollToTop:hover{
+  opacity: 0.8;
+}
+
+.hover {
+  padding: 16px !important;
+  /*border-bottom: 1px solid gray !important;*/
+}
+
+.hover:hover{
+	background-color: #EFEFEF
+}

@@ -1,0 +1,19 @@
+<ion-view view-title="Utenti">
+<ion-content >
+<div class="list card" >
+  <div class="item item-body">
+        <ion-list>
+    <p>
+        <ion-item ng-repeat="guasto in utenti" href="#/app/utenti/{{guasto.id_utente}}">
+          <b class="home">{{guasto.nome}}</b>
+        <br>
+          {{guasto.cognome}}
+        </ion-item>
+      </ion-list>
+    </p>
+  </div>
+</div>
+
+
+</ion-content>
+</ion-view>
